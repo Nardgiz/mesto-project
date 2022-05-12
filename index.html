@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Путешествия по России</title>
+  <link rel="stylesheet" href="./pages/index.css" />
+</head>
+
+<body>
+  <div class="page">
+    <header class="header">
+      <img class="header__logo" src="./images/Vector__logo.png" alt="Логотип">
+    </header>
+    <main class="content">
+      <section class="profile">
+        <div class="profile__info">
+          <img class="profile__avatar" src="./images/Avatar.png" alt="Аватар">
+          <div class="profile__text">
+            <h1 class="profile__firstname">Жак-Ив Кусто</h1>
+            <button class="button-rectangle">
+              <img src="./images/Edit Button.png" alt="Кнопка редактирования">
+            </button>
+            <p class="profile__job">Исследователь океана</p>
+          </div>
+        </div>
+        <button class="button-pluss">
+          <img class="pluss" src="./images/Vector_pluss.png" alt="плюс">
+        </button>
+      </section>
+      <section class="elements">
+        <article class="element">
+          <img class="element__picture" src="./images/Карачаево.png" alt="Карачаевск, фото монастыря">
+          <div class="element__info">
+            <p class="element__text">Карачаево-Черкессия</p>
+            <button class="element__button">
+              <img src="./images/Vector_heart.svg" alt="Кнопка like">
+            </button>
+          </div>
+        </article>
+        <article class="element">
+          <img class="element__picture" src="./images/Гора_Эльбрус_2.png" alt="Вид на Эльбрус">
+          <div class="element__info">
+            <p class="element__text">Гора Эльбрус</p>
+            <button class="element__button">
+              <img src="./images/Vector_heart.svg" alt="Кнопка like">
+            </button>
+          </div>
+        </article>
+        <article class="element">
+          <img class="element__picture" src="./images/Домбай.png" alt="Вид на Домбай">
+          <div class="element__info">
+            <p class="element__text">Домбай</p>
+            <button class="element__button">
+              <img src="./images/Vector_heart.svg" alt="Кнопка like">
+            </button>
+          </div>
+        </article>
+        <article class="element">
+          <img class="element__picture" src="./images/Карачаево.png" alt="Карачаевск, фото монастыря">
+          <div class="element__info">
+            <p class="element__text">Карачаево-Черкессия</p>
+            <button class="element__button">
+              <img src="./images/Vector_heart.svg" alt="Кнопка like">
+            </button>
+          </div>
+        </article>
+        <article class="element">
+          <img class="element__picture" src="./images/Гора_Эльбрус_2.png" alt="Вид на Эльбрус">
+          <div class="element__info">
+            <p class="element__text">Гора Эльбрус</p>
+            <button class="element__button">
+              <img src="./images/Vector_heart.svg" alt="Кнопка like">
+            </button>
+          </div>
+        </article>
+        <article class="element">
+          <img class="element__picture" src="./images/Домбай.png" alt="Вид на Домбай">
+          <div class="element__info">
+            <p class="element__text">Домбай</p>
+            <button class="element__button">
+              <img src="./images/Vector_heart.svg" alt="Кнопка like">
+            </button>
+          </div>
+        </article>
+      </section>
+      <section class="popup popup_opened">
+        <div class="popup__overlay"></div>
+        <form class="form">
+          <button class="close-item">
+            <img class="close-item__image" src="./images/Close-item.png" alt="кнопка закрытия">
+          </button>
+          <p class="form__title">Редактировать профиль</p>
+          <input class="form__name" type="text" id="first-name" name="firstname" placeholder="Жак-Ив Кусто" required>
+          <input class="form__job" type="text" id="job" name="job" placeholder="Исследователь океана" required>
+          <input class="form__button" type="submit" value="Сохранить">
+        </form>
+      </section>
+    </main>
+    <footer class="footer">
+      <p class="footer__text">&copy;2020 Mesto Russia</p>
+    </footer>
+  </div>
+</body>
+
+</html>

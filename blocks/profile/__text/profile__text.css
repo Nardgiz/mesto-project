@@ -1,0 +1,10 @@
+.profile__text {
+  color: white;
+  display: block;
+  margin: 0 0 0 30px;
+}
+@media screen and (max-width: 670px) {
+  .profile__text {
+    margin: 26px auto 0 auto;
+  }
+}

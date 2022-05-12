@@ -1,0 +1,29 @@
+.close-item {
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  cursor: pointer;
+  max-width: 32px;
+  max-height: 32px;
+  position: absolute;
+  top: -40px;
+  right: -40px;
+}
+.close-item:hover {
+  opacity: 0.6;
+  -webkit-transition: linear 0.3s;
+  -o-transition: linear 0.3s;
+  transition: linear 0.3s;
+}
+@media screen and (max-width: 670px) {
+  .close-item {
+    width: 20px;
+    height: 20px;
+    top: -36px;
+    right: 0;
+  }
+}

@@ -1,0 +1,13 @@
+.form__title {
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+  margin: 0;
+  font-family: inherit;
+}
+@media screen and (max-width: 670px) {
+  .form__title {
+    font-size: 18px;
+    line-height: 22px;
+  }
+}
