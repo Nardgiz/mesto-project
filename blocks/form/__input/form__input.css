@@ -1,0 +1,21 @@
+.form__input {
+  margin: 54px 0 0 0;
+  width: 100%;
+  padding: 0 0 13px 0;
+  font-family: inherit;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.form__input:nth-last-of-type(2) {
+  margin: 30px 0 0 0;
+}
+@media screen and (max-width: 670px) {
+  .form__input {
+    width: 100%;
+    margin: 75px 0 0 0;
+  }
+}

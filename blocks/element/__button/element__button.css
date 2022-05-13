@@ -1,6 +1,6 @@
 .element__button {
   background-image: url(../../../images/Vector_heart.svg);
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   padding: 0;
   border: none;
@@ -10,7 +10,8 @@
   appearance: none;
   background-color: transparent;
   cursor: pointer;
-  size: 22px 19px;
+  width: 22px;
+  height: 19px;
   margin: 5px 5px 1px 0;
 }
 .element__button:hover {

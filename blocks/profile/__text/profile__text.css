@@ -1,7 +1,8 @@
 .profile__text {
   color: white;
   display: block;
-  margin: 0 0 0 30px;
+  margin: 20px 0 0 30px;
+  box-sizing: border-box;
 }
 @media screen and (max-width: 670px) {
   .profile__text {

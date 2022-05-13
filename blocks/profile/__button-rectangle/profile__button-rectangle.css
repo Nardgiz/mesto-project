@@ -1,0 +1,31 @@
+.profile__button-rectangle {
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  cursor: pointer;
+  margin: 0 0 0 18px;
+  width: 24px;
+  height: 24px;
+  background-image: url(../../../images/Edit_Button.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: inline-block;
+
+}
+.profile__button-rectangle:hover {
+  opacity: 0.6;
+  -webkit-transition: linear 0.3s;
+  -o-transition: linear 0.3s;
+  transition: linear 0.3s;
+}
+@media screen and (max-width: 670px) {
+  .profile__button-rectangle {
+    margin: 0 0 0 10px;
+    width: 18px;
+    height: 18px;
+  }
+}

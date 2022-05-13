@@ -28,5 +28,8 @@
     width: 100%;
     height: 46px;
     margin-top: 45px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
   }
 }

@@ -11,7 +11,7 @@
 <body>
   <div class="page">
     <header class="header">
-      <img class="header__logo" src="./images/Vector__logo.png" alt="Логотип">
+      <img class="header__logo" src="../mesto-project/images/Vector_logo_mesto.svg" alt="Логотип">
     </header>
     <main class="content">
       <section class="profile">
@@ -19,85 +19,68 @@
           <img class="profile__avatar" src="./images/Avatar.png" alt="Аватар">
           <div class="profile__text">
             <h1 class="profile__firstname">Жак-Ив Кусто</h1>
-            <button class="button-rectangle">
-              <img src="./images/Edit Button.png" alt="Кнопка редактирования">
-            </button>
+            <button class="profile__button-rectangle" type="button" aria-label></button>
             <p class="profile__job">Исследователь океана</p>
           </div>
         </div>
-        <button class="button-pluss">
-          <img class="pluss" src="./images/Vector_pluss.png" alt="плюс">
-        </button>
+        <button class="button-pluss" type="button" aria-label></button>
       </section>
       <section class="elements">
         <article class="element">
           <img class="element__picture" src="./images/Карачаево.png" alt="Карачаевск, фото монастыря">
           <div class="element__info">
             <p class="element__text">Карачаево-Черкессия</p>
-            <button class="element__button">
-              <img src="./images/Vector_heart.svg" alt="Кнопка like">
-            </button>
+            <button class="element__button" type="button" aria-label></button>
           </div>
         </article>
         <article class="element">
           <img class="element__picture" src="./images/Гора_Эльбрус_2.png" alt="Вид на Эльбрус">
           <div class="element__info">
             <p class="element__text">Гора Эльбрус</p>
-            <button class="element__button">
-              <img src="./images/Vector_heart.svg" alt="Кнопка like">
-            </button>
+            <button class="element__button" type="button" aria-label></button>
           </div>
         </article>
         <article class="element">
           <img class="element__picture" src="./images/Домбай.png" alt="Вид на Домбай">
           <div class="element__info">
             <p class="element__text">Домбай</p>
-            <button class="element__button">
-              <img src="./images/Vector_heart.svg" alt="Кнопка like">
-            </button>
+            <button class="element__button" type="button" aria-label></button>
           </div>
         </article>
         <article class="element">
           <img class="element__picture" src="./images/Карачаево.png" alt="Карачаевск, фото монастыря">
           <div class="element__info">
             <p class="element__text">Карачаево-Черкессия</p>
-            <button class="element__button">
-              <img src="./images/Vector_heart.svg" alt="Кнопка like">
-            </button>
+            <button class="element__button" type="button" aria-label></button>
           </div>
         </article>
         <article class="element">
           <img class="element__picture" src="./images/Гора_Эльбрус_2.png" alt="Вид на Эльбрус">
           <div class="element__info">
             <p class="element__text">Гора Эльбрус</p>
-            <button class="element__button">
-              <img src="./images/Vector_heart.svg" alt="Кнопка like">
-            </button>
+            <button class="element__button" type="button" aria-label></button>
           </div>
         </article>
         <article class="element">
           <img class="element__picture" src="./images/Домбай.png" alt="Вид на Домбай">
           <div class="element__info">
             <p class="element__text">Домбай</p>
-            <button class="element__button">
-              <img src="./images/Vector_heart.svg" alt="Кнопка like">
-            </button>
+            <button class="element__button" type="button" aria-label></button>
           </div>
         </article>
       </section>
-      <section class="popup popup_opened">
-        <div class="popup__overlay"></div>
-        <form class="form">
-          <button class="close-item">
-            <img class="close-item__image" src="./images/Close-item.png" alt="кнопка закрытия">
-          </button>
-          <p class="form__title">Редактировать профиль</p>
-          <input class="form__name" type="text" id="first-name" name="firstname" placeholder="Жак-Ив Кусто" required>
-          <input class="form__job" type="text" id="job" name="job" placeholder="Исследователь океана" required>
+    </main>
+    <div class="popup">
+      <div class="popup__container">
+        <button class="close-item" type="button" aria-label></button>
+        <h3 class="popup__title">Редактировать профиль</h3>
+        <form class="form" name="form-main">
+          <input class="form__input" type="text" id="first-name" name="firstname" placeholder="Жак-Ив Кусто" required>
+          <input class="form__input" type="text" id="job" name="job" placeholder="Исследователь океана" required>
           <input class="form__button" type="submit" value="Сохранить">
         </form>
-      </section>
-    </main>
+      </div>
+    </div>
     <footer class="footer">
       <p class="footer__text">&copy;2020 Mesto Russia</p>
     </footer>

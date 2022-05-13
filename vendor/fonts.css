@@ -12,26 +12,14 @@
 
 @font-face {
   font-family: "Inter";
-  font-weight: 700;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
-  -moz-text-size-adjust: 100%;
-  src: url(../vendor/fonts/Inter-Bold.woff2) format("woff2");
-  src: url(../vendor/fonts/Inter-Bold.woff) format("woff");
-}
-
-@font-face {
-  font-family: "Inter";
   font-weight: 500;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
-  src: url(../vendor/fonts/Inter-Regular.woff2) format("woff2");
-  src: url(../vendor/fonts/Inter-Regular.woff) format("woff");
+  src: url(../vendor/fonts/Inter-Medium.woff2) format("woff2");
+  src: url(../vendor/fonts/Inter-Medium.woff) format("woff");
 }
 
 @font-face {
