@@ -165,19 +165,22 @@ const initialCards = [
     renderCard(item, cardList);
   })
 
-
-
 // Обработчик «отправки» формы
   function formSubmitHandlerImg (evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
                                                 // Так мы можем определить свою логику отправки.
                                                 // О том, как это делать, расскажем позже.
 
-    // Получаем значения полей jobInput и nameInput из свойства value и передаем их в html
-    cardImage.src = imgInputLink.value;
-    cardText.textContent = imgInputName.value;
+    // Получаем значения полей jobInput  =и nameInput из свойства value и передаем их в html
+    imgInputLink.value = cardImage.src;
+     imgInputName.value = cardText.textContent;
     // Добавляем кнопке сабмит еще функцию закрытия
     
     closePopup(imgPopup)
 };
 imgButtonSubmit.addEventListener('submit', formSubmitHandlerImg);
+
+formElementImg.addEventListener('submit', function(){
+  imgInputLink.value = cardImage.src;
+  imgInputName.value = cardText.textContent;
+});
