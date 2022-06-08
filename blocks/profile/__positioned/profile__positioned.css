@@ -1,0 +1,4 @@
+.profile__positioned {
+    display: flex;
+    flex-direction: column;
+}

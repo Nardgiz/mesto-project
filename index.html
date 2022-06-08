@@ -17,16 +17,18 @@
       <section class="profile">       
         <div class="profile__info">
           <img class="profile__avatar" src="./images/Avatar.png" alt="Аватар">
-          <div class="profile__text">
-            <h1 class="profile__firstname">Жак-Ив Кусто</h1>
-            <button class="profile__button-rectangle" type="button" aria-label="Редактировать профиль"></button>
-            <p class="profile__job">Исследователь океана</p>  
-          </div>  
+          <div class="profile__positioned">
+            <div class="profile__text">
+              <h1 class="profile__firstname">Жак-Ив Кусто</h1>
+              <button class="profile__button-rectangle" type="button" aria-label="Редактировать профиль"></button>
+            </div>
+            <p class="profile__job">Исследователь океана</p> 
+          </div>
         </div>
         <button class="profile__button-pluss" type="button" aria-label="Добавить фотокарточку"></button>
       </section>
       <section class="elements">
-        <article class="element">
+        <!--<article class="element">
           <img class="element__picture" src="./images/Карачаево.png" alt="Карачаевск, фото монастыря">
           <div class="element__info">
             <p class="element__text">Карачаево-Черкессия</p>
@@ -67,7 +69,17 @@
             <p class="element__text">Домбай</p>
             <button class="element__button" type="button" aria-label="Поставить нравиться"></button>
           </div>
-        </article>
+        </article>-->
+        <template id="element-template">
+          <article class="element">
+            <img class="element__picture" src="" alt="">
+            <button class="element__button-rubbish" type="button" aria-label="Удалить карточку"></button>
+            <div class="element__info">
+              <p class="element__text"></p>
+              <button class="element__button" type="button" aria-label="Поставить нравиться"></button>
+            </div>
+          </article>
+        </template>
       </section>
     </main>
     <div class="popup">
@@ -81,10 +93,29 @@
         </form>
       </div>
     </div>
+    <div class="popup popup_img">
+      <div class="popup__container popup__container_img">
+        <button class="close-item close-item_img" type="button" aria-label="Закрыть форму редактирования профиля"></button>
+        <h3 class="popup__title popup__title_img">Новое место</h3>
+        <form class="form form_img" name="form-main">
+          <input class="form__input form__input_img" type="text" id="img-name" name="imgname" placeholder="Название" required>
+          <input class="form__input form__input_img" type="text" id="img-link" name="link" placeholder="Ссылка на кртинку" required>
+          <input class="form__button form__button_img" type="submit" value="Создать">
+        </form>
+      </div>
+    </div>
+    <div class="popup popup_pic">
+      <div class="popup__container popup__container_picture">
+        <img class="popup__picture" src="" alt="">
+        <p class="popup__text"></p>
+        <button class="close-item close-item_pic" type="button" aria-label="Закрыть форму редактирования профиля"></button>
+      </div>
+    </div>
     <footer class="footer">
       <p class="footer__text">&copy;2020 Mesto Russia</p>
     </footer>
   </div>
+  <script src="./script.js"></script>
 </body>
 
 </html>

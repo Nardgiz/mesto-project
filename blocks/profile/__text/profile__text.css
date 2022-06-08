@@ -4,7 +4,6 @@
   display: -ms-flexbox;
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
   max-width: 336px;
   margin: 20px 0 0 30px;
 }

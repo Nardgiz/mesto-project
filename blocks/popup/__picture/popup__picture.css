@@ -1,0 +1,9 @@
+.popup__picture {
+    max-width: 100%;
+    max-height: 540px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin: 0;
+}
+
+  
