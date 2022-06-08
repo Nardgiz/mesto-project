@@ -122,9 +122,15 @@ const initialCards = [
     openPopup(picPopup);
   }
 
+ //находим в html секцию с разметкой для карточек
   const cardList = document.querySelector('.elements');
   const cardTemplate = document.querySelector('#element-template').content.querySelector('.element');
-  
+  // Находим форму для добавления картинок в DOM
+  const formElementImg = document.querySelector('.form_img');
+  const imgInputName = formElementImg.querySelector('#img-name');
+  const imgInputLink = formElementImg.querySelector('#img-link');
+  const imgButtonSubmit = formElementImg.querySelector('.form__button_img')
+
   const createCard = function(data){
       const cardElement = cardTemplate.cloneNode(true);
       const cardImage = cardElement.querySelector('.element__picture');
@@ -158,3 +164,20 @@ const initialCards = [
   initialCards.forEach(function(item){
     renderCard(item, cardList);
   })
+
+
+
+// Обработчик «отправки» формы
+  function formSubmitHandlerImg (evt) {
+    evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+                                                // Так мы можем определить свою логику отправки.
+                                                // О том, как это делать, расскажем позже.
+
+    // Получаем значения полей jobInput и nameInput из свойства value и передаем их в html
+    cardImage.src = imgInputLink.value;
+    cardText.textContent = imgInputName.value;
+    // Добавляем кнопке сабмит еще функцию закрытия
+    
+    closePopup(imgPopup)
+};
+imgButtonSubmit.addEventListener('submit', formSubmitHandlerImg);
