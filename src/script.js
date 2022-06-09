@@ -11,9 +11,9 @@ const deleteImg = function (element) {
 // Находим попап редактирования профиля в DOM
 const popupProfile = document.querySelector('.popup');
 // Находим попап для добавления изображений
-const imgPopup = document.querySelector('.popup_img');
+const popupAddCard = document.querySelector('.popup_img');
 // Находим попап для просмотра фото
-const picPopup = document.querySelector('.popup_pic');
+const popupPicture = document.querySelector('.popup_pic');
 
 // функция, которая выводит в попап, указанные имя и деятельность
 function addInfofromPopup(popup){
@@ -29,10 +29,10 @@ popupButton.addEventListener('click', function(){
 // добавляем свойство кнопке, которая должна открывать попап добавления изображения
 const addImg = document.querySelector('.profile__button-pluss')
 addImg.addEventListener('click', function(){
-  openPopup(imgPopup);
+  openPopup(popupAddCard);
 });
 // добавляем свойство кнопке, которая должна открывать попап просмотра фото
-const picPopupCont = picPopup.querySelector('.popup__container_picture');
+const picPopupCont = popupPicture.querySelector('.popup__container_picture');
 const picPopupEl = picPopupCont.querySelector('.popup__picture');
 const picText = picPopupCont.querySelector('.popup__text');
 picPopupEl.addEventListener('click', function(){
@@ -52,25 +52,25 @@ popupButtonClose.addEventListener('click', function(){
 // добавляем закрытие попап, который добавляет изображения
 const imgPopupClose = document.querySelector('.close-item_img');
 imgPopupClose.addEventListener('click', function(){
-  closePopup(imgPopup);
+  closePopup(popupAddCard);
 });
 // добавляем закрытие попап, который просматривает изображения
 const picPopupClose = document.querySelector('.close-item_pic');
 picPopupClose.addEventListener('click', function(){
-  closePopup(picPopup);
+  closePopup(popupPicture);
 });
 
 // Находим форму редактирования профиля в DOM
-const formElement = document.querySelector('.form');
-const nameInput = formElement.querySelector('#first-name');
-const jobInput = formElement.querySelector('#job');
+const formEditProfile = document.querySelector('.form');
+const nameInput = formEditProfile.querySelector('#first-name');
+const jobInput = formEditProfile.querySelector('#job');
 
 // Находим значения имя и занятия в html коде
 const profileName = document.querySelector('.profile__firstname');
 const profileJob = document.querySelector('.profile__job');
 
 // Обработчик «отправки» формы
-function formSubmitHandler (evt) {
+function submitEditProfileForm (evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
                                                 // Так мы можем определить свою логику отправки.
                                                 // О том, как это делать, расскажем позже.
@@ -78,48 +78,50 @@ function formSubmitHandler (evt) {
     // Получаем значения полей jobInput и nameInput из свойства value и передаем их в html
     profileName.textContent = nameInput.value;
     profileJob.textContent = jobInput.value;
+
     // Добавляем кнопке сабмит еще функцию закрытия
     closePopup(popupProfile)
 }
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
-formElement.addEventListener('submit', formSubmitHandler); 
+formEditProfile.addEventListener('submit', submitEditProfileForm); 
 
 
 // Работаем с добавлением карточек
 const initialCards = [
-    {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-  ];
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
 
   //Добавляем функцию, которая будет открывать по клику попап для просмотра фотографий
   const clickImage = function(data) {
     picPopupEl.src = data.link;
     picText.textContent = data.name;
-    openPopup(picPopup);
+    openPopup(popupPicture);
   }
 
  //находим в html секцию с разметкой для карточек
@@ -155,32 +157,28 @@ const initialCards = [
       return cardElement;
       
   }
-
   const renderCard = function(data, container) {
     const card = createCard(data);
     container.prepend(card);
   }
-  
-  initialCards.forEach(function(item){
+    initialCards.forEach(function(item){
     renderCard(item, cardList);
   })
 
-// Обработчик «отправки» формы
-  function formSubmitHandlerImg (evt) {
-    evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-                                                // Так мы можем определить свою логику отправки.
-                                                // О том, как это делать, расскажем позже.
 
-    // Получаем значения полей jobInput  =и nameInput из свойства value и передаем их в html
-    imgInputLink.value = cardImage.src;
-     imgInputName.value = cardText.textContent;
-    // Добавляем кнопке сабмит еще функцию закрытия
-    
-    closePopup(imgPopup)
+// Обработчик «отправки» формы для картинок
+function formSubmitHandlerImg (evt) {
+  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+                                              // Так мы можем определить свою логику отправки.
+                                              // О том, как это делать, расскажем позже.
+  // Делаем объект, в котором указываем значения из массива name и link
+  const newCard = {
+  name:imgInputName.value,
+  link:imgInputLink.value
+  }
+  // Запускаем функцию рендеринга карточки, с введенными уже аргументами
+  renderCard(newCard, cardList);
+  // Добавляем кнопке сабмит еще функцию закрытия
+    closePopup(popupAddCard)
 };
-imgButtonSubmit.addEventListener('submit', formSubmitHandlerImg);
-
-formElementImg.addEventListener('submit', function(){
-  imgInputLink.value = cardImage.src;
-  imgInputName.value = cardText.textContent;
-});
+formElementImg.addEventListener('submit', formSubmitHandlerImg);
