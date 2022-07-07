@@ -4,12 +4,8 @@
   "description": "* Интро\r * Figma\r * Порядок работы и применение технологий\r * JS script",
   "main": "index.js",
   "scripts": {
-<<<<<<< HEAD
     "build": "webpack --mode production",
     "dev": "webpack serve"
-=======
-    "test": "echo \"Error: no test specified\" && exit 1"
->>>>>>> b0124f912daf6d65b71cd794570acbcc792248a5
   },
   "repository": {
     "type": "git",
@@ -21,7 +17,6 @@
     "url": "https://github.com/Nardgiz/mesto-project/issues"
   },
   "homepage": "https://github.com/Nardgiz/mesto-project#readme",
-<<<<<<< HEAD
   "dependencies": {
     "core-js": "^3.23.3",
     "jquery": "^3.6.0"
@@ -40,10 +35,5 @@
     "webpack": "^5.73.0",
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.9.3"
-=======
-  "devDependencies": {
-    "webpack": "^5.73.0",
-    "webpack-cli": "^4.10.0"
->>>>>>> b0124f912daf6d65b71cd794570acbcc792248a5
   }
 }
