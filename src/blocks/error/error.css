@@ -1,5 +1,4 @@
 .error {
-
     position: absolute;
     width: 358px;
     font-family: 'Inter';
@@ -8,6 +7,8 @@
     font-size: 12px;
     line-height: 15px;
     color: #FF0000;
+    top: 0;
+    left: 0;
 }
 
 @media screen and (max-width: 670px) {
