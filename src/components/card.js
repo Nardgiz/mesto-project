@@ -1,46 +1,23 @@
+  import { openPopup } from "./modal";
+  import { picPopupEl, picText, popupPicture, cardTemplate } from "../utils/constants.js"
 
-import { clickImage, deleteImg } from './modal.js';
 
+function toggleButton (evt) {
+  evt.target.classList.toggle("element__button_active")
+};
 
-  // Находим карточки
-  export const initialCards = [
-    {
-      name: "Архыз",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-    },
-    {
-      name: "Челябинская область",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-    },
-    {
-      name: "Иваново",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-    },
-    {
-      name: "Камчатка",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-    },
-    {
-      name: "Холмогорский район",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-    },
-    {
-      name: "Байкал",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-    },
-  ];
-  
-  //находим в html секцию с разметкой для карточек
-  export const cardList = document.querySelector(".elements");
-  export const cardTemplate = document
-  .querySelector("#element-template")
-  .content.querySelector(".element");
-  // Находим форму для добавления картинок в DOM
-  export const formElementImg = document.querySelector(".form_img");
-  export const imgInputName = formElementImg.querySelector("#img-name");
-  export const imgInputLink = formElementImg.querySelector("#img-link");
-  export const imgButtonSubmit = formElementImg.querySelector(".form__button_img");
+/** добавляем функцию, которая удаляет картинки */ 
+export const deleteImg = function (element) {
+  element.remove();
+};
 
+/** Добавляем функцию, которая будет открывать по клику попап для просмотра фотографий */
+export const clickImage = function (data) {
+  picPopupEl.src = data.link;
+  picPopupEl.alt = data.name;
+  picText.textContent = data.name;
+  openPopup(popupPicture);
+};
 
 export const createCard = function (data) {
   const cardElement = cardTemplate.cloneNode(true);
@@ -50,24 +27,20 @@ export const createCard = function (data) {
   const rubbishButton = cardElement.querySelector(".element__button-rubbish");
 
   cardImage.src = data.link;
+  cardImage.alt = data.name;
   cardText.textContent = data.name;
 
   cardImage.addEventListener("click", () => clickImage(data));
 
-  //Добавляем работу лайк
-  likeButton.addEventListener("click", function (evt) {
-    evt.target.classList.toggle("element__button_active");
-  });
+  /** Добавляем работу лайк */
+  likeButton.addEventListener("click", toggleButton);
 
-  //Добавляем работу rubbish
+  /** Добавляем работу rubbish */
   rubbishButton.addEventListener("click", function () {
     deleteImg(cardElement);
   });
   return cardElement;
 };
 
-export const renderCard = function (data, container) {
-  const card = createCard(data);
-  container.prepend(card);
-};
+
 
