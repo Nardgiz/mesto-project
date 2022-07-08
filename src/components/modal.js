@@ -34,7 +34,7 @@ import { overlay, closeByEscape } from './utils.js';
   export const openPopup = (popup) => {
     popup.classList.add("popup_opened");
     document.addEventListener('keydown', closeByEscape);
-    popup.addEventListener('click', overlay); 
+    popup.addEventListener('mousedown', overlay); 
   };
 
   // добавляем функцию, которая удаляет картинки
@@ -52,7 +52,7 @@ import { overlay, closeByEscape } from './utils.js';
   export const closePopup = (popup) => {
     popup.classList.remove("popup_opened");
     document.removeEventListener('keydown', closeByEscape);
-    popup.removeEventListener('click', overlay);
+    popup.removeEventListener('mousedown', overlay);
   };
     
   // Обработчик «отправки» формы

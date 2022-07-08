@@ -3,7 +3,7 @@ import { clickImage, deleteImg } from './modal.js';
 
 
   // Находим карточки
-  export const initialCards = [
+  /*export const initialCards = [
     {
       name: "Архыз",
       link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
@@ -28,7 +28,7 @@ import { clickImage, deleteImg } from './modal.js';
       name: "Байкал",
       link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
     },
-  ];
+  ];*/
   
   //находим в html секцию с разметкой для карточек
   export const cardList = document.querySelector(".elements");

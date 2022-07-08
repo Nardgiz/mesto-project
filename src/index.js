@@ -3,6 +3,12 @@ import './pages/index.css';
 import { formElementImg, renderCard, cardList, initialCards, imgInputName, imgInputLink } from './components/card.js';
 import { popupButton, submitEditProfileForm, openPopup, addInfofromPopup, closePopup, popupProfile, popupAddCard, popupPicture, formEditProfile, picPopupClose, imgPopupClose, popupButtonClose, addImg, picPopupEl } from './components/modal.js';
 import { setEventListers } from './components/validation';
+import { getAllInfo } from './components/api';
+
+
+getAllInfo()
+.then([cards,  ])
+
 
 export const validationConfig = {
   formSelector: '.form',
@@ -68,9 +74,15 @@ export function formSubmitHandlerImg(evt) {
   closePopup(popupAddCard);
 }
 
-initialCards.forEach(function (item) {
-  renderCard(item, cardList);
-});
+getAllCards()
+  .then((cardsDataFromServer) => {
+    cardsDataFromServer.forEach(function (item) {
+      renderCard(item, cardList);
+    });
+
+  })
+
+
 
 const enableValidation = ({formSelector, ...rest}) => {
   const forms = document.querySelectorAll(formSelector);
