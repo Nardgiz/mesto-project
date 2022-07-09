@@ -1,12 +1,16 @@
-  import { openPopup } from "./modal";
-  import { picPopupEl, picText, popupPicture, cardTemplate } from "../utils/constants.js"
+import { openPopup } from "./modal";
+import {
+  picPopupEl,
+  picText,
+  popupPicture,
+  cardTemplate,
+} from "../utils/constants.js";
 
+function toggleButton(evt) {
+  evt.target.classList.toggle("element__button_active");
+}
 
-function toggleButton (evt) {
-  evt.target.classList.toggle("element__button_active")
-};
-
-/** добавляем функцию, которая удаляет картинки */ 
+/** добавляем функцию, которая удаляет картинки */
 export const deleteImg = function (element) {
   element.remove();
 };
@@ -41,6 +45,3 @@ export const createCard = function (data) {
   });
   return cardElement;
 };
-
-
-
