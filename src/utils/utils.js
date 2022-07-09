@@ -1,4 +1,5 @@
-import { closePopup } from "../components/modal.js";
+/**закрытие по esc и overlay */
+import { closePopup } from "../components/modal";
 
 const closeByEscape = (evt) => {
   if (evt.key === "Escape") {
@@ -8,7 +9,7 @@ const closeByEscape = (evt) => {
 };
 
 const overlay = (evt) => {
-  const activePopup = document.querySelector('.popup_opened');
+  const activePopup = document.querySelector(".popup_opened");
   if (
     evt.target.classList.contains("popup") ||
     evt.target.classList.contains("close-item")
@@ -16,10 +17,5 @@ const overlay = (evt) => {
     closePopup(activePopup);
   }
 };
-/** функция, которая делает кнопку неактивной */
-const buttonDisable = (button) => {
-    button.classList.add('form__button_invalid');
-    button.disabled = "disabled";
-  };
 
-export { buttonDisable, closeByEscape, overlay };
+export { closeByEscape, overlay };

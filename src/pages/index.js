@@ -24,7 +24,10 @@ import {
   submitButtonProfile,
 } from "../utils/constants.js";
 
+import { addInfofromPopup, openPopup, closePopup } from "../components/modal";
+import { toggleButtonState } from "../components/validation.js";
 import { setEventListers } from "../components/validation";
+<<<<<<< HEAD
 import { overlay, closeByEscape, buttonDisable } from "../utils/utils.js";
 import { createCard } from "../components/card.js";
 import { addInfofromPopup, openPopup, closePopup } from "../components/modal";
@@ -56,7 +59,15 @@ getAllCards().then((cards) => {
       renderCard(card, cardList);
     });
 });*/
+||||||| 8e7ebba
+import { overlay, closeByEscape, buttonDisable } from "../utils/utils.js";
+import { createCard } from '../components/card.js';
+import { addInfofromPopup, openPopup, closePopup } from '../components/modal';
+=======
+import { createCard } from "../components/card.js";
+>>>>>>> main
 
+<<<<<<< HEAD
 
 
 getAllInfo().then(([cards, user]) => {
@@ -71,48 +82,47 @@ getAllInfo().then(([cards, user]) => {
 
 
 /** добавляем свойство кнопке, которая должна открывать попап редактирования профиля */
+||||||| 8e7ebba
+
+
+/** добавляем свойство кнопке, которая должна открывать попап редактирования профиля */ 
+=======
+/** добавляем свойство кнопке, которая должна открывать попап редактирования профиля */
+>>>>>>> main
 popupButton.addEventListener("click", function () {
   openPopup(popupProfile);
-  document.addEventListener("keydown", closeByEscape);
-  document.addEventListener("mousedown", overlay);
   addInfofromPopup(popupProfile);
-  buttonDisable(submitButtonProfile);
 });
 /** добавляем свойство кнопке, которая должна открывать попап добавления изображения */
 addImg.addEventListener("click", function () {
   openPopup(popupAddCard);
-  document.addEventListener("keydown", closeByEscape);
-  document.addEventListener("mousedown", overlay);
-  buttonDisable(imgButtonSubmit);
 });
-
 /** добавляем свойство кнопке, которая должна закрывать попап, отвечающий за редактирования профиля */
 popupButtonClose.addEventListener("click", function () {
   closePopup(popupProfile);
-  document.removeEventListener("keydown", closeByEscape);
-  document.removeEventListener("click", overlay);
 });
 /** добавляем закрытие попап, который добавляет изображения */
 imgPopupClose.addEventListener("click", function () {
   closePopup(popupAddCard);
-  document.removeEventListener("keydown", closeByEscape);
-  document.removeEventListener("click", overlay);
 });
 /** добавляем закрытие попап, который просматривает изображения */
 picPopupClose.addEventListener("click", function () {
   closePopup(popupPicture);
-  document.removeEventListener("keydown", closeByEscape);
-  document.removeEventListener("click", overlay);
 });
 /** Прикрепляем обработчик к форме:
  * он будет следить за событием “submit” - «отправка» */
 formEditProfile.addEventListener("submit", submitEditProfileForm);
+<<<<<<< HEAD
 
 /** добавляем свойство кнопке, которая должна открывать попап просмотра фото */
+||||||| 8e7ebba
+
+/** добавляем свойство кнопке, которая должна открывать попап просмотра фото */ 
+=======
+/** добавляем свойство кнопке, которая должна открывать попап просмотра фото */
+>>>>>>> main
 picPopupEl.addEventListener("click", function () {
   openPopup(picPopupEl);
-  document.addEventListener("keydown", closeByEscape);
-  document.addEventListener("click", overlay);
 });
 
 /** Обработчик «отправки» формы */
@@ -129,8 +139,24 @@ export function submitEditProfileForm(evt) {
   /** Добавляем кнопке сабмит еще функцию закрытия */
   closePopup(popupProfile);
 }
+<<<<<<< HEAD
 
 /** Обработчик «отправки» формы для картинок */
+||||||| 8e7ebba
+/** функция, которая создает новую карточку */
+export const renderCard = function (data, container) {
+  const card = createCard(data);
+  container.prepend(card);
+};
+/** Обработчик «отправки» формы для картинок */ 
+=======
+/** функция, которая создает новую карточку */
+export const renderCard = function (data, container) {
+  const card = createCard(data);
+  container.prepend(card);
+};
+/** Обработчик «отправки» формы для картинок */
+>>>>>>> main
 export function formSubmitHandlerImg(evt) {
   /** Эта строчка отменяет стандартную отправку формы.
    * Так мы можем определить свою логику отправки.
@@ -147,16 +173,21 @@ export function formSubmitHandlerImg(evt) {
   closePopup(popupAddCard);
   /** добавляем очистку формы после отправки картинок */
   formElementImg.reset();
+<<<<<<< HEAD
+||||||| 8e7ebba
+
+=======
+  toggleButtonState(imgButtonSubmit, false, validationConfig);
+>>>>>>> main
 }
 
 formElementImg.addEventListener("submit", formSubmitHandlerImg);
 
 
-
-const enableValidation = ({ formSelector, ...rest }) => {
-  const forms = document.querySelectorAll(formSelector);
+const enableValidation = (config) => {
+  const forms = document.querySelectorAll(config.formSelector);
   Array.from(forms).forEach((formElement) => {
-    setEventListers(formElement, rest);
+    setEventListers(formElement, config);
   });
 };
 

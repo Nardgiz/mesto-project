@@ -4,14 +4,14 @@ const cardList = document.querySelector(".elements");
 const cardTemplate = document
   .querySelector("#element-template")
   .content.querySelector(".element");
-/** Находим форму для добавления картинок в DOM */ 
+/** Находим форму для добавления картинок в DOM */
 const formElementImg = document.querySelector(".form_img");
 const imgInputName = formElementImg.querySelector("#img-name");
 const imgInputLink = formElementImg.querySelector("#img-link");
 const imgButtonSubmit = formElementImg.querySelector(".form__button_img");
 
 /** ПОПАПЫ */
-/** Находим попап редактирования профиля в DOM */ 
+/** Находим попап редактирования профиля в DOM */
 const popupProfile = document.querySelector(".popup");
 /** Находим кнопку, которая должна закрывать попап, отвечающий за редактирования профиля */
 const popupButtonClose = document.querySelector(".close-item");
@@ -23,7 +23,7 @@ const popupPicture = document.querySelector(".popup_pic");
 const popupButton = document.querySelector(".profile__button-rectangle");
 /** Находим кнопку, которая должна открывать попап добавления изображения */
 const addImg = document.querySelector(".profile__button-pluss");
-const submitButtonProfile = document.querySelector(".form__button")
+const submitButtonProfile = document.querySelector(".form__button");
 /** попап просмотра фото */
 const picPopupCont = popupPicture.querySelector(".popup__container_picture");
 const picPopupEl = picPopupCont.querySelector(".popup__picture");
@@ -48,7 +48,6 @@ const validationConfig = {
   inputErrorClass: "form__input_invalid",
   errorClass: "error",
 };
-const { inputSelector, ...rest } = validationConfig;
 
 export {
   submitButtonProfile,
