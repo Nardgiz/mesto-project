@@ -24,7 +24,7 @@ import {
   submitButtonProfile,
 } from "../utils/constants.js";
 
-import { addInfofromPopup, openPopup, closePopup } from "../components/modal";
+import { addInfofromPopup, openPopup, closePopup, closeByCross } from "../components/modal";
 import { toggleButtonState } from "../components/validation.js";
 import { setEventListers } from "../components/validation";
 import { createCard } from "../components/card.js";
@@ -39,17 +39,11 @@ addImg.addEventListener("click", function () {
   openPopup(popupAddCard);
 });
 /** добавляем свойство кнопке, которая должна закрывать попап, отвечающий за редактирования профиля */
-popupButtonClose.addEventListener("click", function () {
-  closePopup(popupProfile);
-});
+popupButtonClose.addEventListener("click", closeByCross);
 /** добавляем закрытие попап, который добавляет изображения */
-imgPopupClose.addEventListener("click", function () {
-  closePopup(popupAddCard);
-});
+imgPopupClose.addEventListener("click", closeByCross);
 /** добавляем закрытие попап, который просматривает изображения */
-picPopupClose.addEventListener("click", function () {
-  closePopup(popupPicture);
-});
+picPopupClose.addEventListener("click", closeByCross);
 /** Прикрепляем обработчик к форме:
  * он будет следить за событием “submit” - «отправка» */
 formEditProfile.addEventListener("submit", submitEditProfileForm);

@@ -5,7 +5,9 @@ import {
   profileName,
   profileJob,
 } from "../utils/constants";
-import { closeByEscape, overlay } from "../utils/utils";
+
+
+
 
 const openPopup = (popup) => {
   popup.classList.add("popup_opened");
@@ -26,4 +28,30 @@ const closePopup = (popup) => {
   popup.removeEventListener("mousedown", overlay);
 };
 
-export { openPopup, addInfofromPopup, closePopup };
+const closeByCross = () => {
+  const allCrosses = document.querySelectorAll('.close-item');
+  allCrosses.forEach((cross) => {
+    cross.addEventListener('click', closePopup)
+  })
+}
+
+
+const closeByEscape = (evt) => {
+  if (evt.key === "Escape") {
+    const activePopup = document.querySelector(".popup_opened");
+    closePopup(activePopup);
+  }
+};
+
+const overlay = (evt) => {
+  const activePopup = document.querySelector(".popup_opened");
+  if (
+    evt.target.classList.contains("popup") ||
+    evt.target.classList.contains("close-item")
+  ) {
+    closePopup(activePopup);
+  }
+};
+
+
+export { openPopup, addInfofromPopup, closePopup, closeByCross };
