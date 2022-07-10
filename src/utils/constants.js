@@ -10,7 +10,16 @@ const imgInputName = formElementImg.querySelector("#img-name");
 const imgInputLink = formElementImg.querySelector("#img-link");
 const imgButtonSubmit = formElementImg.querySelector(".form__button_img");
 
+const avatarImage = document.querySelector(".profile__avatar")
+const avatarButtonSubmit = document.querySelector(".form__button_avatar");
+const avatarForm = document.querySelector(".form_avatar");
+
+
 /** ПОПАПЫ */
+/**Попап редактирования аватара */
+const popupAvatar = document.querySelector(".popup_avatar");
+/**Кнопка, которая открывает попап редактирования аватара */
+const openPopupAvatarButton = document.querySelector(".profile__avatar");
 /** Находим попап редактирования профиля в DOM */
 const popupProfile = document.querySelector(".popup");
 /** Находим кнопку, которая должна закрывать попап, отвечающий за редактирования профиля */
@@ -50,6 +59,11 @@ const validationConfig = {
 };
 
 export {
+  popupAvatar,
+  avatarForm,
+  avatarButtonSubmit,
+  avatarImage,
+  openPopupAvatarButton,
   submitButtonProfile,
   validationConfig,
   cardList,
