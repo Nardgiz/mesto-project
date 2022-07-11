@@ -1,0 +1,38 @@
+.profile__avatar-button {
+  max-width: 120px;
+  max-height: 120px;
+  border-radius: 100%;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  border: none;
+  font: inherit;
+  background: transparent;
+  color: inherit;
+  outline: none;
+  text-align: inherit;
+  cursor: pointer;
+  position: relative;
+  object-fit: cover;
+}
+
+
+.profile__avatar-button:hover::after {
+  display: block;
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  border-radius: 100%;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  background-image: url(../../../images/pen_vector.png);
+  background-repeat: no-repeat;
+  background-size: 26px 26px;
+  background-position: center;
+  object-fit: cover;
+}

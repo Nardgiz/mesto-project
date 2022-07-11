@@ -66,7 +66,6 @@ const handleDeleteCard = (cardElement, cardId) => {
 const createAvatar = function (dataAvatar) {
   avatarImage.src = dataAvatar.link;
   avatarImage.alt = dataAvatar.name;
-  return avatarImage
 }
 
 export const createCard = function (data, userId, handleChangeLikeStatus, handleDeleteCard) {

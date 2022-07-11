@@ -1,16 +1,8 @@
 .profile__avatar {
-  max-width: 120px;
-  max-height: 120px;
-  border-radius: 100%;
-}
-.profile__avatar:hover {
   width: 120px;
   height: 120px;
-  border-radius: 50%;
-  cursor: pointer;
-  background-color: rgba(0, 0, 0, 0.8);
-  background-image: url(/src/images/Trash.svg);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+  border-radius: 100%;
+  overflow: hidden;
+  object-fit: cover;
 }
+

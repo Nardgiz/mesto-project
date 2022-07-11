@@ -33,10 +33,7 @@ function editProfileForm(data) {
     return fetch(`${config.url}/users/me`, {
       method: "PATCH",
       headers: config.headers,
-      body: JSON.stringify({
-        name: '',
-        about: ''
-      }),
+      body: JSON.stringify(data),
     }).then(onResponse);
   }
 
@@ -49,6 +46,7 @@ function addCard(data) {
   }).then(onResponse);
 }
 /** 7.отображение количества лайков */
+function likeAmount()
 
 /** 8.удаление карточки */
 function removeCard(cardId) {

@@ -21,25 +21,52 @@ import {
   popupButtonClose,
   popupProfile,
   validationConfig,
-  submitButtonProfile,
-  openPopupAvatarButton,
   avatarForm,
+  avatarInput,
   avatarButtonSubmit,
+  avatarImage,
+  popupAvatar,
+  setUserInfo,
+  avatarOpenButton,
 } from "../utils/constants.js";
 
 import { addInfofromPopup, openPopup, closePopup } from "../components/modal";
 import { toggleButtonState } from "../components/validation.js";
 import { setEventListers } from "../components/validation";
-import { createAvatar, createCard, handleChangeLikeStatus, handleDeleteCard } from "../components/card.js";
-import { getAllInfo, addCard, changeLikeStatus, editProfileAvatar } from "../components/api.js"
-
+import {
+  createAvatar,
+  createCard,
+  handleChangeLikeStatus,
+  handleDeleteCard,
+} from "../components/card.js";
+import {
+  getAllInfo,
+  addCard,
+  changeLikeStatus,
+  editProfileAvatar,
+  getProfileInfo,
+  editProfileForm
+} from "../components/api.js";
 
 let userId = null;
 
+/** функция, которая создает новую карточку */
+function renderCard(data, container, userId) {
+  const card = createCard(
+    data,
+    userId,
+    handleChangeLikeStatus,
+    handleDeleteCard
+  );
+  container.prepend(card);
+};
+
 getAllInfo().then(([cards, user]) => {
-  profileName.textContent = user.name;
-  profileJob.textContent = user.about;
-  avatarImage.src = user.avatar
+  setUserInfo({
+    userName: user.name,
+    userDescription: user.about,
+    userAvatar: user.avatar
+  })
   userId = user._id;
 
   /**получаем от сервера карточки и вызываем на них метод рендера каждой */
@@ -48,14 +75,11 @@ getAllInfo().then(([cards, user]) => {
   });
 });
 
-editProfileAvatar(data).then((dataAvatar) => {
-  createAvatar(dataAvatar)
-})
 
 /** открытие попапа аватара */
-openPopupAvatarButton.addEventListener('click', () => {
-  openPopup(popupProfile);
-})
+avatarOpenButton.addEventListener("click", () => {
+  openPopup(popupAvatar);
+});
 
 /** добавляем свойство кнопке, которая должна открывать попап редактирования профиля */
 popupButton.addEventListener("click", function () {
@@ -86,33 +110,25 @@ picPopupEl.addEventListener("click", function () {
   openPopup(picPopupEl);
 });
 
-
 /** Обработчик «отправки» формы */
 export function submitEditProfileForm(evt) {
-  /** Эта строчка отменяет стандартную отправку формы.
-   * Так мы можем определить свою логику отправки.
-   * О том, как это делать, расскажем позже */
   evt.preventDefault();
-
-  /** Получаем значения полей jobInput и nameInput из свойства value и передаем их в html */
-  profileName.textContent = nameInput.value;
-  profileJob.textContent = jobInput.value;
-
+  editProfileForm().then({name: nameInput.value, about: jobInput.value})
+    .then((data) => {
+      setUserInfo({
+        userName: data.name,
+        userDescription: data.about,
+      })
+      .then((newData) => {
+        getProfileInfo(newData)
+      })
+    })
   /** Добавляем кнопке сабмит еще функцию закрытия */
   closePopup(popupProfile);
 }
 
-/** функция, которая создает новую карточку */
-const renderCard = function (data, container, userId) {
-  const card = createCard(data, userId, handleChangeLikeStatus, handleDeleteCard);
-  container.prepend(card);
-};
-
 /** Обработчик «отправки» формы для картинок */
 export function formSubmitHandlerImg(evt) {
-  /** Эта строчка отменяет стандартную отправку формы.
-   * Так мы можем определить свою логику отправки.
-   * О том, как это делать, расскажем позже */
   evt.preventDefault();
   /** Делаем объект, в котором указываем значения из массива name и link */
   const newCard = {
@@ -120,47 +136,53 @@ export function formSubmitHandlerImg(evt) {
     link: imgInputLink.value,
   };
   /** Запускаем функцию рендеринга карточки, с введенными уже аргументами */
-  addCard(newCard).then((data) => {
-    renderCard(data, cardList, userId);
-  })
-  .catch(() => {
-    console.log("Ошибка при добавлении карточки");
-  })
-  
+  addCard(newCard)
+    .then((data) => {
+      renderCard(data, cardList, userId);
+    })
+    .catch(() => {
+      console.log("Ошибка при добавлении карточки");
+    });
   /** Добавляем кнопке сабмит еще функцию закрытия */
   closePopup(popupAddCard);
   /** добавляем очистку формы после отправки картинок */
   formElementImg.reset();
   toggleButtonState(imgButtonSubmit, false, validationConfig);
 }
-
 formElementImg.addEventListener("submit", formSubmitHandlerImg);
 
 /** Обработчик «отправки» формы для аватара */
 export function formSubmitHandlerAvatar(evt) {
-  /** Эта строчка отменяет стандартную отправку формы.
-   * Так мы можем определить свою логику отправки.
-   * О том, как это делать, расскажем позже */
   evt.preventDefault();
-
   /**получение данных с сервера и работа с ними */
-  editProfileAvatar(newAvatar).then((dataAvatar) => {
-    createAvatar(dataAvatar)
+  editProfileAvatar({avatar: avatarInput.value})
+  .then((data) => {
+    createAvatar(data);
   })
+  .then(() => {
+    getProfileInfo()
+    .then((dataAvatar) => {
+      setUserInfo({
+        userAvatar: dataAvatar.avatar
+      })
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  })
+
   /** Добавляем кнопке сабмит еще функцию закрытия */
   closePopup(popupAvatar);
   /** добавляем очистку формы после отправки картинок */
   avatarForm.reset();
   toggleButtonState(avatarButtonSubmit, false, validationConfig);
-}
-avatarButtonSubmit.addEventListener('click', formSubmitHandlerAvatar);
-
+};
+avatarButtonSubmit.addEventListener("click", formSubmitHandlerAvatar);
 
 const enableValidation = (config) => {
   const forms = document.querySelectorAll(config.formSelector);
   Array.from(forms).forEach((formElement) => {
     setEventListers(formElement, config);
-  });
-};
-
+  })
+}
 enableValidation(validationConfig);

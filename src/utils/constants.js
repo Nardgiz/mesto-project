@@ -10,16 +10,15 @@ const imgInputName = formElementImg.querySelector("#img-name");
 const imgInputLink = formElementImg.querySelector("#img-link");
 const imgButtonSubmit = formElementImg.querySelector(".form__button_img");
 
-const avatarImage = document.querySelector(".profile__avatar")
+const avatarImage = document.querySelector(".profile__avatar");
+const avatarOpenButton = document.querySelector(".profile__avatar-button");
 const avatarButtonSubmit = document.querySelector(".form__button_avatar");
 const avatarForm = document.querySelector(".form_avatar");
+const popupAvatar = document.querySelector(".popup_avatar");
+const avatarInput = document.querySelector(".form__input_avatar");
 
 
 /** ПОПАПЫ */
-/**Попап редактирования аватара */
-const popupAvatar = document.querySelector(".popup_avatar");
-/**Кнопка, которая открывает попап редактирования аватара */
-const openPopupAvatarButton = document.querySelector(".profile__avatar");
 /** Находим попап редактирования профиля в DOM */
 const popupProfile = document.querySelector(".popup");
 /** Находим кнопку, которая должна закрывать попап, отвечающий за редактирования профиля */
@@ -58,12 +57,20 @@ const validationConfig = {
   errorClass: "error",
 };
 
+const setUserInfo = ({userName, userDescription, userAvatar}) => {
+  if (userName) profileName.textContent = userName;
+  if (userDescription) profileJob.textContent = userDescription;
+  if (userAvatar) avatarImage.src = userAvatar;
+};
+
 export {
+  avatarInput,
+  setUserInfo,
   popupAvatar,
+  avatarOpenButton,
   avatarForm,
   avatarButtonSubmit,
   avatarImage,
-  openPopupAvatarButton,
   submitButtonProfile,
   validationConfig,
   cardList,
