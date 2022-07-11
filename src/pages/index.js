@@ -45,7 +45,8 @@ import {
   changeLikeStatus,
   editProfileAvatar,
   getProfileInfo,
-  editProfileForm
+  editProfileForm,
+  removeCard
 } from "../components/api.js";
 
 let userId = null;
@@ -113,7 +114,7 @@ picPopupEl.addEventListener("click", function () {
 /** Обработчик «отправки» формы */
 export function submitEditProfileForm(evt) {
   evt.preventDefault();
-  editProfileForm().then({name: nameInput.value, about: jobInput.value})
+  editProfileForm()
     .then((data) => {
       setUserInfo({
         userName: data.name,
@@ -121,6 +122,9 @@ export function submitEditProfileForm(evt) {
       })
       .then((newData) => {
         getProfileInfo(newData)
+      })
+      .catch((err) => {
+        console.log(`Ошибка загрузки данных ${err.status}`)
       })
     })
   /** Добавляем кнопке сабмит еще функцию закрытия */

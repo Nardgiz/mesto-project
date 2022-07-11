@@ -1,5 +1,5 @@
 const config = {
-  url: "https://nomoreparties.co/v1/plus-cohort-13",
+  url: "https://mesto.nomoreparties.co/v1/plus-cohort-13",
   headers: {
     authorization: "d1d14902-c78a-4d00-aa9d-9b64f78ed110",
     "Content-type": "application/json"
@@ -46,7 +46,12 @@ function addCard(data) {
   }).then(onResponse);
 }
 /** 7.отображение количества лайков */
-function likeAmount()
+function likeAmount(dataId, likes) {
+  return fetch (`${config.url}/cards/likes/${dataId}`, {
+    method: "GET",
+    headers: config.headers
+  }).then(onResponse);
+  }
 
 /** 8.удаление карточки */
 function removeCard(cardId) {
