@@ -5,7 +5,7 @@ const config = {
     "Content-type": "application/json"
   },
 };
-/** функция по работе с полученными данными от сервера */
+/** функция по проверке промисов */
 const onResponse = (res) => {
   return res.ok ? res.json() : Promise.reject(res);
 };
@@ -52,7 +52,6 @@ function likeAmount(dataId, likes) {
     headers: config.headers
   }).then(onResponse);
   }
-
 /** 8.удаление карточки */
 function removeCard(cardId) {
   return fetch(`${config.url}/cards/${cardId}`, {
@@ -67,7 +66,6 @@ function changeLikeStatus(dataId, isLike) {
       headers: config.headers
     }).then(onResponse);
   }
-
 /** 10.обновление аватара пользователя */
 function editProfileAvatar(data) {
   return fetch(`${config.url}/users/me/avatar`, {

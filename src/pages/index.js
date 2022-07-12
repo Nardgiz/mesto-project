@@ -27,6 +27,7 @@ import {
   avatarImage,
   popupAvatar,
   setUserInfo,
+  submitButtonProfile,
   avatarOpenButton,
 } from "../utils/constants.js";
 
@@ -62,6 +63,7 @@ function renderCard(data, container, userId) {
   container.prepend(card);
 };
 
+/**получаем информацию о пользователи и о загруженных карточках */
 getAllInfo().then(([cards, user]) => {
   setUserInfo({
     userName: user.name,
@@ -69,87 +71,87 @@ getAllInfo().then(([cards, user]) => {
     userAvatar: user.avatar
   })
   userId = user._id;
-
   /**получаем от сервера карточки и вызываем на них метод рендера каждой */
   cards.reverse().forEach((card) => {
     renderCard(card, cardList, userId);
   });
 });
-
-
 /** открытие попапа аватара */
 avatarOpenButton.addEventListener("click", () => {
   openPopup(popupAvatar);
+  loadSubmitButton(avatarButtonSubmit);
 });
 
-/** добавляем свойство кнопке, которая должна открывать попап редактирования профиля */
+/** открытие попапа редактирования */
 popupButton.addEventListener("click", function () {
   openPopup(popupProfile);
   addInfofromPopup(popupProfile);
+  loadSubmitButton(submitButtonProfile);
 });
-/** добавляем свойство кнопке, которая должна открывать попап добавления изображения */
-addImg.addEventListener("click", function () {
-  openPopup(popupAddCard);
-});
-/** добавляем свойство кнопке, которая должна закрывать попап, отвечающий за редактирования профиля */
+/** закрытие попап редактирования профиля */
 popupButtonClose.addEventListener("click", function () {
   closePopup(popupProfile);
 });
-/** добавляем закрытие попап, который добавляет изображения */
+
+/** открытие попапа для загрузки новых карточек */
+addImg.addEventListener("click", function () {
+  openPopup(popupAddCard);
+  loadSubmitButton(imgButtonSubmit);
+});
+/** закрытие попап загрузки новых карточек */
 imgPopupClose.addEventListener("click", function () {
   closePopup(popupAddCard);
 });
-/** добавляем закрытие попап, который просматривает изображения */
-picPopupClose.addEventListener("click", function () {
-  closePopup(popupPicture);
-});
-/** Прикрепляем обработчик к форме:
- * он будет следить за событием “submit” - «отправка» */
+
+/** добавляем открытие попап просмотра карточек */
 formEditProfile.addEventListener("submit", submitEditProfileForm);
-/** добавляем свойство кнопке, которая должна открывать попап просмотра фото */
 picPopupEl.addEventListener("click", function () {
   openPopup(picPopupEl);
 });
-
-/** Обработчик «отправки» формы */
+/**функция измения статуса кнопки Сохранить на Сохранение*/
+const loadSubmitButton = ((button) => {
+  button.addEventListener('click', () => {
+     button.value = "Сохранение..."
+   })
+  button.value = "Сохранить"
+})
+/** Обработчик «отправки» формы редактироания профиля*/
 export function submitEditProfileForm(evt) {
   evt.preventDefault();
-  editProfileForm()
+  const newDataUser = {
+    name: nameInput.value,
+    about: jobInput.value,
+  }
+  editProfileForm(newDataUser)
     .then((data) => {
       setUserInfo({
         userName: data.name,
         userDescription: data.about,
       })
-      .then((newData) => {
-        getProfileInfo(newData)
-      })
-      .catch((err) => {
-        console.log(`Ошибка загрузки данных ${err.status}`)
-      })
+    })
+    .catch((err) => {
+      console.log(`Ошибка загрузки данных ${err.status}`)
     })
   /** Добавляем кнопке сабмит еще функцию закрытия */
   closePopup(popupProfile);
 }
+submitButtonProfile.addEventListener("submit", submitEditProfileForm);
 
-/** Обработчик «отправки» формы для картинок */
+/** Обработчик «отправки» формы добавления карточек */
 export function formSubmitHandlerImg(evt) {
   evt.preventDefault();
-  /** Делаем объект, в котором указываем значения из массива name и link */
   const newCard = {
     name: imgInputName.value,
     link: imgInputLink.value,
   };
-  /** Запускаем функцию рендеринга карточки, с введенными уже аргументами */
   addCard(newCard)
     .then((data) => {
       renderCard(data, cardList, userId);
     })
-    .catch(() => {
-      console.log("Ошибка при добавлении карточки");
-    });
-  /** Добавляем кнопке сабмит еще функцию закрытия */
+    .catch((err) => {
+      console.log(`Ошибка загрузки данных ${err.status}`)
+    })
   closePopup(popupAddCard);
-  /** добавляем очистку формы после отправки картинок */
   formElementImg.reset();
   toggleButtonState(imgButtonSubmit, false, validationConfig);
 }
@@ -158,31 +160,26 @@ formElementImg.addEventListener("submit", formSubmitHandlerImg);
 /** Обработчик «отправки» формы для аватара */
 export function formSubmitHandlerAvatar(evt) {
   evt.preventDefault();
-  /**получение данных с сервера и работа с ними */
-  editProfileAvatar({avatar: avatarInput.value})
-  .then((data) => {
-    createAvatar(data);
-  })
-  .then(() => {
-    getProfileInfo()
+  const newAvatar = {
+    avatar: avatarInput.value,
+  }
+  editProfileAvatar(newAvatar)
     .then((dataAvatar) => {
       setUserInfo({
         userAvatar: dataAvatar.avatar
       })
+      closePopup(popupAvatar);
+      avatarForm.reset();
     })
-    .catch(err => {
-      console.log(err)
+    .catch((err) => {
+      console.log(`Ошибка загрузки данных ${err.status}`)
     })
-  })
 
-  /** Добавляем кнопке сабмит еще функцию закрытия */
-  closePopup(popupAvatar);
-  /** добавляем очистку формы после отправки картинок */
-  avatarForm.reset();
   toggleButtonState(avatarButtonSubmit, false, validationConfig);
 };
 avatarButtonSubmit.addEventListener("click", formSubmitHandlerAvatar);
 
+/**проверка инпутов форм на валидность */
 const enableValidation = (config) => {
   const forms = document.querySelectorAll(config.formSelector);
   Array.from(forms).forEach((formElement) => {

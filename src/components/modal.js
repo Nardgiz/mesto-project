@@ -5,7 +5,24 @@ import {
   profileName,
   profileJob,
 } from "../utils/constants";
-import { closeByEscape, overlay } from "../utils/utils";
+
+/**закрытие по esc и overlay */
+const closeByEscape = (evt) => {
+  if (evt.key === "Escape") {
+    const activePopup = document.querySelector(".popup_opened");
+    closePopup(activePopup);
+  }
+};
+/**закрытие по overlay */
+const overlay = (evt) => {
+  const activePopup = document.querySelector(".popup_opened");
+  if (
+    evt.target.classList.contains("popup") ||
+    evt.target.classList.contains("close-item")
+  ) {
+    closePopup(activePopup);
+  }
+};
 
 const openPopup = (popup) => {
   popup.classList.add("popup_opened");

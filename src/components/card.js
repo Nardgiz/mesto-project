@@ -11,14 +11,13 @@ import { removeCard, changeLikeStatus } from "./api";
 
 export { handleChangeLikeStatus, updateLikesState, handleDeleteCard, deleteImg, createAvatar };
 
-/** Добавляем функцию, которая будет открывать по клику попап для просмотра фотографий */
+/** открытие попапа для просмотра фотографий по клику на карточку */
 export const clickImage = function (data) {
   picPopupEl.src = data.link;
   picPopupEl.alt = data.name;
   picText.textContent = data.name;
   openPopup(popupPicture);
 };
-
 /** функция, которая определяет, поставлен лайк или нет */
 export const isLiked = (likesArray, userId) => {
   return Boolean(
@@ -27,7 +26,7 @@ export const isLiked = (likesArray, userId) => {
     })
   );
 };
-
+/**обновление кол-ва лайков */
 const updateLikesState = (cardElement, likesArray, userId) => {
   const likeButton = cardElement.querySelector(".element__button");
   const likeAmount = cardElement.querySelector(".element__like-amount");
@@ -40,28 +39,30 @@ const updateLikesState = (cardElement, likesArray, userId) => {
     likeButton.classList.remove("element__button_active");
   }
 }
-
 /**функция которая отслеживает постановку лайка */
-const handleChangeLikeStatus = (cardId, isLiked, cardElement) => {
+const handleChangeLikeStatus = (cardId, isLiked, cardElement, userId) => {
   changeLikeStatus(cardId, isLiked)
-  .then((dataFromServer) => {
-    updateLikesState(cardElement, dataFromServer.likes, userId )
-  })
+    .then((dataFromServer) => {
+      updateLikesState(cardElement, dataFromServer.likes, userId)
+    })
+    .catch((err) => {
+      console.log(`Ошибка работы лайк ${err.status}`)
+    })
 }
-
-/** добавляем функцию, которая удаляет картинки */ 
+/** функция удаления карточек */ 
 const deleteImg = function (element) { 
   element.remove(); 
 };
-
 /**функция удаления карточки */
 const handleDeleteCard = (cardElement, cardId) => {
   removeCard(cardId)
   .then(() => {
     deleteImg(cardElement)
   })
+  .catch((err) => {
+    console.log(`Ошибка при удалении ${err.status}`)
+  })
 };
-
 /**функция, которая обновляет картинку аватара */
 const createAvatar = function (dataAvatar) {
   avatarImage.src = dataAvatar.link;
@@ -75,7 +76,6 @@ export const createCard = function (data, userId, handleChangeLikeStatus, handle
   const likeButton = cardElement.querySelector(".element__button");
   const rubbishButton = cardElement.querySelector(".element__button-rubbish");
  
-
   cardImage.src = data.link;
   cardImage.alt = data.name;
   cardText.textContent = data.name;
@@ -89,7 +89,7 @@ export const createCard = function (data, userId, handleChangeLikeStatus, handle
   cardImage.addEventListener("click", () => clickImage(data));
 
   likeButton.addEventListener("click", () => {
-    handleChangeLikeStatus(data._id, likeButton.classList.contains("element__button_active"), cardElement);
+    handleChangeLikeStatus(data._id, likeButton.classList.contains("element__button_active"), cardElement, userId);
   });
 
   /** Добавляем работу rubbish*/
