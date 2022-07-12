@@ -14,14 +14,14 @@ function getProfileInfo() {
   return fetch(`${config.url}/users/me`, {
     method: "GET",
     headers: config.headers
-  }).then(onResponse);
+  }).then((res) => onResponse(res));;
 }
 /** 4.загрузка карточек с сервера */
 function getAllCards() {
   return fetch(`${config.url}/cards`, {
     method: "GET",
     headers: config.headers
-  }).then(onResponse);
+  }).then((res) => onResponse(res));;
 }
 
 function getAllInfo() {
@@ -34,7 +34,7 @@ function editProfileForm(data) {
       method: "PATCH",
       headers: config.headers,
       body: JSON.stringify(data),
-    }).then(onResponse);
+    }).then((res) => onResponse(res));;
   }
 
 /** 6.добавление новой карточки */
@@ -43,7 +43,7 @@ function addCard(data) {
     method: "POST",
     headers: config.headers,
     body: JSON.stringify(data),
-  }).then(onResponse);
+  }).then((res) => onResponse(res));;
 }
 
 /** 8.удаление карточки */
@@ -51,14 +51,14 @@ function removeCard(cardId) {
   return fetch(`${config.url}/cards/${cardId}`, {
     method: "DELETE",
     headers: config.headers
-  }).then(onResponse);
+  }).then((res) => onResponse(res));;
 }
 /** 9.постановка или удаление лайка */
 function changeLikeStatus(dataId, isLike) {
     return fetch(`${config.url}/cards/likes/${dataId}`, {
       method: isLike ? "DELETE" : "PUT",
       headers: config.headers
-    }).then(onResponse);
+    }).then((res) => onResponse(res));;
   }
 /** 10.обновление аватара пользователя */
 function editProfileAvatar(data) {
@@ -66,7 +66,7 @@ function editProfileAvatar(data) {
     method: "PATCH",
     headers: config.headers,
     body: JSON.stringify(data)
-  }).then(onResponse);
+  }).then((res) => onResponse(res));;
 }
 
 export {

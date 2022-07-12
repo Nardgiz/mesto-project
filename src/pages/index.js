@@ -50,6 +50,8 @@ import {
   removeCard
 } from "../components/api.js";
 
+import { loadSubmitButton } from "../utils/utils.js"
+
 let userId = null;
 
 /** функция, которая создает новую карточку */
@@ -79,14 +81,12 @@ getAllInfo().then(([cards, user]) => {
 /** открытие попапа аватара */
 avatarOpenButton.addEventListener("click", () => {
   openPopup(popupAvatar);
-  loadSubmitButton(avatarButtonSubmit);
 });
 
 /** открытие попапа редактирования */
 popupButton.addEventListener("click", function () {
   openPopup(popupProfile);
   addInfofromPopup(popupProfile);
-  loadSubmitButton(submitButtonProfile);
 });
 /** закрытие попап редактирования профиля */
 popupButtonClose.addEventListener("click", function () {
@@ -96,7 +96,6 @@ popupButtonClose.addEventListener("click", function () {
 /** открытие попапа для загрузки новых карточек */
 addImg.addEventListener("click", function () {
   openPopup(popupAddCard);
-  loadSubmitButton(imgButtonSubmit);
 });
 /** закрытие попап загрузки новых карточек */
 imgPopupClose.addEventListener("click", function () {
@@ -108,13 +107,7 @@ formEditProfile.addEventListener("submit", submitEditProfileForm);
 picPopupEl.addEventListener("click", function () {
   openPopup(picPopupEl);
 });
-/**функция измения статуса кнопки Сохранить на Сохранение*/
-const loadSubmitButton = ((button) => {
-  button.addEventListener('click', () => {
-     button.value = "Сохранение..."
-   })
-  button.value = "Сохранить"
-})
+
 /** Обработчик «отправки» формы редактироания профиля*/
 export function submitEditProfileForm(evt) {
   evt.preventDefault();
@@ -122,18 +115,22 @@ export function submitEditProfileForm(evt) {
     name: nameInput.value,
     about: jobInput.value,
   }
+  loadSubmitButton(popupProfile, true);
   editProfileForm(newDataUser)
     .then((data) => {
       setUserInfo({
         userName: data.name,
         userDescription: data.about,
       })
+      closePopup(popupProfile);  
     })
     .catch((err) => {
-      console.log(`Ошибка загрузки данных ${err.status}`)
+      console.log(`Ошибка загрузки данных ${err}`)
     })
-  /** Добавляем кнопке сабмит еще функцию закрытия */
-  closePopup(popupProfile);
+    .finally(() => {
+      loadSubmitButton(popupProfile, false);
+    })
+    toggleButtonState(submitButtonProfile, false, validationConfig);
 }
 submitButtonProfile.addEventListener("submit", submitEditProfileForm);
 
@@ -144,6 +141,7 @@ export function formSubmitHandlerImg(evt) {
     name: imgInputName.value,
     link: imgInputLink.value,
   };
+  loadSubmitButton(popupAddCard, true);
   addCard(newCard)
     .then((data) => {
       renderCard(data, cardList, userId);
@@ -153,7 +151,9 @@ export function formSubmitHandlerImg(evt) {
     .catch((err) => {
       console.log(`Ошибка загрузки данных ${err.status}`)
     })
-    
+    .finally(() => {
+      loadSubmitButton(popupAddCard, false);
+    })  
   toggleButtonState(imgButtonSubmit, false, validationConfig);
 }
 formElementImg.addEventListener("submit", formSubmitHandlerImg);
@@ -164,6 +164,7 @@ export function formSubmitHandlerAvatar(evt) {
   const newAvatar = {
     avatar: avatarInput.value,
   }
+  loadSubmitButton(popupAvatar, true);
   editProfileAvatar(newAvatar)
     .then((dataAvatar) => {
       setUserInfo({
@@ -175,6 +176,9 @@ export function formSubmitHandlerAvatar(evt) {
     .catch((err) => {
       console.log(`Ошибка загрузки данных ${err.status}`)
     })
+    .finally(() => {
+      loadSubmitButton(popupAvatar, false);
+    })  
 
   toggleButtonState(avatarButtonSubmit, false, validationConfig);
 };
