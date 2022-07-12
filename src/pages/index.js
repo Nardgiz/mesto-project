@@ -88,39 +88,6 @@ popupButton.addEventListener("click", function () {
   addInfofromPopup(popupProfile);
   loadSubmitButton(submitButtonProfile);
 });
-<<<<<<< HEAD
-/** добавляем свойство кнопке, которая должна открывать попап добавления изображения */
-addImg.addEventListener("click", function () {
-  openPopup(popupAddCard);
-});
-/** добавляем свойство кнопке, которая должна закрывать попап, отвечающий за редактирования профиля */
-popupButtonClose.addEventListener("click", closeByCross);
-/** добавляем закрытие попап, который добавляет изображения */
-imgPopupClose.addEventListener("click", closeByCross);
-/** добавляем закрытие попап, который просматривает изображения */
-picPopupClose.addEventListener("click", closeByCross);
-/** Прикрепляем обработчик к форме:
- * он будет следить за событием “submit” - «отправка» */
-||||||| 522e0dc
-/** добавляем свойство кнопке, которая должна открывать попап добавления изображения */
-addImg.addEventListener("click", function () {
-  openPopup(popupAddCard);
-});
-/** добавляем свойство кнопке, которая должна закрывать попап, отвечающий за редактирования профиля */
-popupButtonClose.addEventListener("click", function () {
-  closePopup(popupProfile);
-});
-/** добавляем закрытие попап, который добавляет изображения */
-imgPopupClose.addEventListener("click", function () {
-  closePopup(popupAddCard);
-});
-/** добавляем закрытие попап, который просматривает изображения */
-picPopupClose.addEventListener("click", function () {
-  closePopup(popupPicture);
-});
-/** Прикрепляем обработчик к форме:
- * он будет следить за событием “submit” - «отправка» */
-=======
 /** закрытие попап редактирования профиля */
 popupButtonClose.addEventListener("click", function () {
   closePopup(popupProfile);
@@ -137,7 +104,6 @@ imgPopupClose.addEventListener("click", function () {
 });
 
 /** добавляем открытие попап просмотра карточек */
->>>>>>> api
 formEditProfile.addEventListener("submit", submitEditProfileForm);
 picPopupEl.addEventListener("click", function () {
   openPopup(picPopupEl);
@@ -181,12 +147,13 @@ export function formSubmitHandlerImg(evt) {
   addCard(newCard)
     .then((data) => {
       renderCard(data, cardList, userId);
+      closePopup(popupAddCard);
+      formElementImg.reset();
     })
     .catch((err) => {
       console.log(`Ошибка загрузки данных ${err.status}`)
     })
-  closePopup(popupAddCard);
-  formElementImg.reset();
+    
   toggleButtonState(imgButtonSubmit, false, validationConfig);
 }
 formElementImg.addEventListener("submit", formSubmitHandlerImg);

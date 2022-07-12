@@ -5,13 +5,6 @@ import {
   profileName,
   profileJob,
 } from "../utils/constants";
-<<<<<<< HEAD
-
-
-
-||||||| 522e0dc
-import { closeByEscape, overlay } from "../utils/utils";
-=======
 
 /**закрытие по esc и overlay */
 const closeByEscape = (evt) => {
@@ -20,6 +13,7 @@ const closeByEscape = (evt) => {
     closePopup(activePopup);
   }
 };
+
 /**закрытие по overlay */
 const overlay = (evt) => {
   const activePopup = document.querySelector(".popup_opened");
@@ -30,7 +24,6 @@ const overlay = (evt) => {
     closePopup(activePopup);
   }
 };
->>>>>>> api
 
 const openPopup = (popup) => {
   popup.classList.add("popup_opened");
@@ -57,24 +50,5 @@ const closeByCross = () => {
     cross.addEventListener('click', closePopup)
   })
 }
-
-
-const closeByEscape = (evt) => {
-  if (evt.key === "Escape") {
-    const activePopup = document.querySelector(".popup_opened");
-    closePopup(activePopup);
-  }
-};
-
-const overlay = (evt) => {
-  const activePopup = document.querySelector(".popup_opened");
-  if (
-    evt.target.classList.contains("popup") ||
-    evt.target.classList.contains("close-item")
-  ) {
-    closePopup(activePopup);
-  }
-};
-
 
 export { openPopup, addInfofromPopup, closePopup, closeByCross };
