@@ -45,13 +45,7 @@ function addCard(data) {
     body: JSON.stringify(data),
   }).then(onResponse);
 }
-/** 7.отображение количества лайков */
-function likeAmount(dataId, likes) {
-  return fetch (`${config.url}/cards/likes/${dataId}`, {
-    method: "GET",
-    headers: config.headers
-  }).then(onResponse);
-  }
+
 /** 8.удаление карточки */
 function removeCard(cardId) {
   return fetch(`${config.url}/cards/${cardId}`, {
