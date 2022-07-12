@@ -1,30 +1,3 @@
-/** КАРТОЧКИ */
-const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
 
 /** находим в html секцию с разметкой для карточек */
 const cardList = document.querySelector(".elements");
@@ -36,6 +9,14 @@ const formElementImg = document.querySelector(".form_img");
 const imgInputName = formElementImg.querySelector("#img-name");
 const imgInputLink = formElementImg.querySelector("#img-link");
 const imgButtonSubmit = formElementImg.querySelector(".form__button_img");
+
+const avatarImage = document.querySelector(".profile__avatar");
+const avatarOpenButton = document.querySelector(".profile__avatar-button");
+const avatarButtonSubmit = document.querySelector(".form__button_avatar");
+const avatarForm = document.querySelector(".form_avatar");
+const popupAvatar = document.querySelector(".popup_avatar");
+const avatarInput = document.querySelector(".form__input_avatar");
+
 
 /** ПОПАПЫ */
 /** Находим попап редактирования профиля в DOM */
@@ -76,10 +57,22 @@ const validationConfig = {
   errorClass: "error",
 };
 
+const setUserInfo = ({userName, userDescription, userAvatar}) => {
+  if (userName) profileName.textContent = userName;
+  if (userDescription) profileJob.textContent = userDescription;
+  if (userAvatar) avatarImage.src = userAvatar;
+};
+
 export {
+  avatarInput,
+  setUserInfo,
+  popupAvatar,
+  avatarOpenButton,
+  avatarForm,
+  avatarButtonSubmit,
+  avatarImage,
   submitButtonProfile,
   validationConfig,
-  initialCards,
   cardList,
   cardTemplate,
   formElementImg,

@@ -11,8 +11,8 @@
   -ms-flex-align: center;
   align-items: center;
   background-color: #fff;
-  max-width: 358px;
-  max-height: 259px;
+  width: 358px;
+  height: 259px;
   padding: 34px 36px 37px 36px;
   border-radius: 10px;
   position: relative;

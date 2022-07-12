@@ -18,11 +18,9 @@
       <main class="content">
         <section class="profile">
           <div class="profile__info">
-            <img
-              class="profile__avatar"
-              src="<%=require('./images/avatar.png')%>"
-              alt="Аватар"
-            />
+            <button class="profile__avatar-button" type="button">
+              <img class="profile__avatar" src="" alt="" />
+            </button>
             <div class="profile__positioned">
               <div class="profile__text">
                 <h1 class="profile__firstname">Жак-Ив Кусто</h1>
@@ -44,11 +42,7 @@
         <section class="elements">
           <template id="element-template">
             <article class="element">
-              <img
-                class="element__picture"
-                src=""
-                alt="Здесь должно быть изображение"
-              />
+              <img class="element__picture" src="" alt="" />
               <button
                 class="element__button-rubbish"
                 type="button"
@@ -56,16 +50,20 @@
               ></button>
               <div class="element__info">
                 <p class="element__text"></p>
-                <button
-                  class="element__button"
-                  type="button"
-                  aria-label="Поставить нравиться"
-                ></button>
+                <div class="likebuttons">
+                  <button
+                    class="element__button"
+                    type="button"
+                    aria-label="Поставить нравиться"
+                  ></button>
+                  <p class="element__like-amount"></p>
+                </div>
               </div>
             </article>
           </template>
         </section>
       </main>
+
       <div class="popup popup_profile">
         <div class="popup__container">
           <button
@@ -104,6 +102,32 @@
             </label>
             <input
               class="form__button form__button_invalid"
+              type="submit"
+              value="Сохранить"
+            />
+          </form>
+        </div>
+      </div>
+      <div class="popup popup_avatar">
+        <div class="popup__container popup__container_avatar">
+          <button
+            class="close-item"
+            type="button"
+            aria-label="Закрыть форму редактирования аватара"
+          ></button>
+          <h3 class="popup__title">Обновить аватар</h3>
+          <form class="form form_avatar" name="form-main" novalidate>
+            <input
+              class="form__input form__input_avatar"
+              type="url"
+              id="avatar-link"
+              name="link"
+              placeholder="Ссылка на аватарку"
+              required
+            />
+            <span id="avatar-link-error" class="error"></span>
+            <input
+              class="form__button form__button_avatar form__button_invalid"
               type="submit"
               value="Сохранить"
             />

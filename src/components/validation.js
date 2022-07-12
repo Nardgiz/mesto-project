@@ -1,5 +1,3 @@
-import { validationConfig } from "../utils/constants";
-
 /**  Функция, которая добавляет класс с ошибкой */
 const showError = (errorElement, inputElement, config) => {
   errorElement.textContent = inputElement.validationMessage;
