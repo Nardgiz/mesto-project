@@ -1,6 +1,6 @@
-import "./index.css";
+/* import "./index.css"; */
 import {
-  initialCards,
+  dataCard,
   cardList,
   formElementImg,
   imgInputName,
@@ -29,17 +29,13 @@ import {
   setUserInfo,
   submitButtonProfile,
   avatarOpenButton,
+  picText
 } from "../utils/constants.js";
 
-import { addInfofromPopup, openPopup, closePopup, closeByCross } from "../components/modal";
+import { addInfofromPopup, openPopup, closePopup, closeByCross } from "../components/modal.js";
 import { toggleButtonState } from "../components/validation.js";
-import { setEventListers } from "../components/validation";
-import {
-  createAvatar,
-  createCard,
-  handleChangeLikeStatus,
-  handleDeleteCard,
-} from "../components/card.js";
+import { setEventListers } from "../components/validation.js";
+import Card from "../components/card.js";
 import {
   getAllInfo,
   addCard,
@@ -54,16 +50,6 @@ import { loadSubmitButton } from "../utils/utils.js"
 
 let userId = null;
 
-/** функция, которая создает новую карточку */
-function renderCard(data, container, userId) {
-  const card = createCard(
-    data,
-    userId,
-    handleChangeLikeStatus,
-    handleDeleteCard
-  );
-  container.prepend(card);
-};
 
 /**получаем информацию о пользователи и о загруженных карточках */
 getAllInfo().then(([cards, user]) => {
@@ -192,3 +178,60 @@ const enableValidation = (config) => {
   })
 }
 enableValidation(validationConfig);
+
+/**функция, которая обновляет картинку аватара */
+const createAvatar = function (dataAvatar) {
+  avatarImage.src = dataAvatar.link;
+  avatarImage.alt = dataAvatar.name;
+}
+
+
+// функция, которая создает новую карточку на освное класса Card
+function renderCard(data, container, userId) {
+  const card = new Card (
+    dataCard,
+    data,
+    userId,{
+    handleCardClick: (data)=> handleCardClick(data),
+    handleLikeClick: (cardId, isLiked)=> handleLikeClick(cardId, isLiked, card),
+    handleDeleteIconClick: (cardElement, cardId)=>handleDeleteIconClick(cardElement, cardId)
+});
+  container.prepend(card.createCard());
+};
+
+/** функция удаления карточек */ 
+const deleteImg = function (element) { 
+  element.remove(); 
+};
+
+
+/**функция удаления карточки */
+const handleDeleteIconClick = (cardElement, cardId) => {
+  removeCard(cardId)
+  .then(() => {
+    deleteImg(cardElement)
+  })
+  .catch((err) => {
+    console.log(`Ошибка при удалении ${err.status}`)
+  })
+};
+
+
+/**функция которая отслеживает постановку лайка */
+const handleLikeClick = (cardId, isLiked, card) => {
+  changeLikeStatus(cardId, isLiked)
+    .then((dataFromServer) => {
+      card.updateLikesState(dataFromServer);
+    })
+    .catch((err) => {
+      console.log(`Ошибка работы лайк ${err.status}`)
+    })
+}
+
+/** открытие попапа для просмотра фотографий по клику на карточку */
+const handleCardClick =(data)=>{
+  picPopupEl.src = data.link;
+  picPopupEl.alt = data.name;
+  picText.textContent = data.name;
+  openPopup(popupPicture);
+};

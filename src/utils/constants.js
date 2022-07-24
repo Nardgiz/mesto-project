@@ -1,9 +1,17 @@
+//Конфиг для создания карточки
+const dataCard = {
+  templateSelector: '#element-template',
+  cardSelector: '.element',
+  cardPictureSelector: '.element__picture',
+  cardTextSelector: '.element__text',
+  likeButtonSelector: '.element__button',
+  likeButtonActiveClass: 'element__button_active',
+  likeCounterSelector: '.element__like-amount',
+  rubbishButtonSelector: '.element__button-rubbish',
+};
 
 /** находим в html секцию с разметкой для карточек */
 const cardList = document.querySelector(".elements");
-const cardTemplate = document
-  .querySelector("#element-template")
-  .content.querySelector(".element");
 /** Находим форму для добавления картинок в DOM */
 const formElementImg = document.querySelector(".form_img");
 const imgInputName = formElementImg.querySelector("#img-name");
@@ -64,6 +72,7 @@ const setUserInfo = ({userName, userDescription, userAvatar}) => {
 };
 
 export {
+  dataCard,
   avatarInput,
   setUserInfo,
   popupAvatar,
@@ -74,7 +83,6 @@ export {
   submitButtonProfile,
   validationConfig,
   cardList,
-  cardTemplate,
   formElementImg,
   imgInputName,
   imgInputLink,

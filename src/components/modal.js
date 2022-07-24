@@ -4,7 +4,7 @@ import {
   jobInput,
   profileName,
   profileJob,
-} from "../utils/constants";
+} from "../utils/constants.js";
 
 /**закрытие по esc и overlay */
 const closeByEscape = (evt) => {
