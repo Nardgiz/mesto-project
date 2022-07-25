@@ -1,7 +1,6 @@
 /* import "./index.css"; */
 import {
   dataCard,
-  cardList,
   formElementImg,
   imgInputName,
   imgInputLink,
@@ -35,7 +34,8 @@ import {
 import { addInfofromPopup, openPopup, closePopup, closeByCross } from "../components/modal.js";
 import { toggleButtonState } from "../components/validation.js";
 import { setEventListers } from "../components/validation.js";
-import Card from "../components/card.js";
+import Card from '../components/card.js';
+import Section from '../components/section.js';
 import {
   getAllInfo,
   addCard,
@@ -49,21 +49,9 @@ import {
 import { loadSubmitButton } from "../utils/utils.js"
 
 let userId = null;
+let cardList={};
 
 
-/**получаем информацию о пользователи и о загруженных карточках */
-getAllInfo().then(([cards, user]) => {
-  setUserInfo({
-    userName: user.name,
-    userDescription: user.about,
-    userAvatar: user.avatar
-  })
-  userId = user._id;
-  /**получаем от сервера карточки и вызываем на них метод рендера каждой */
-  cards.reverse().forEach((card) => {
-    renderCard(card, cardList, userId);
-  });
-});
 /** открытие попапа аватара */
 avatarOpenButton.addEventListener("click", () => {
   openPopup(popupAvatar);
@@ -130,7 +118,10 @@ export function formSubmitHandlerImg(evt) {
   loadSubmitButton(popupAddCard, true);
   addCard(newCard)
     .then((data) => {
-      renderCard(data, cardList, userId);
+      cardList._renderedItems=[data];
+      cardList.renderItems(userId);
+  
+
       closePopup(popupAddCard);
       formElementImg.reset();
     })
@@ -186,26 +177,43 @@ const createAvatar = function (dataAvatar) {
 }
 
 
+
+/**получаем информацию о пользователи и о загруженных карточках */
+getAllInfo().then(([cards, user]) => {
+  setUserInfo({
+    userName: user.name,
+    userDescription: user.about,
+    userAvatar: user.avatar
+  })
+  userId = user._id;
+  /**получаем от сервера карточки и вызываем на них метод рендера каждой */
+  cards.reverse();
+  cardList = new Section({data:cards, renderer:(dataitem, userId) => renderCard(dataitem, userId)}, '.elements');
+  cardList.renderItems(userId);
+});
+
+
+
 // функция, которая создает новую карточку на освное класса Card
-function renderCard(data, container, userId) {
+function renderCard(dataitem, userId) {
   const card = new Card (
     dataCard,
-    data,
+    dataitem,
     userId,{
     handleCardClick: (data)=> handleCardClick(data),
     handleLikeClick: (cardId, isLiked)=> handleLikeClick(cardId, isLiked, card),
     handleDeleteIconClick: (cardElement, cardId)=>handleDeleteIconClick(cardElement, cardId)
 });
-  container.prepend(card.createCard());
+cardList.setItem(card.createCard());
 };
 
-/** функция удаления карточек */ 
+// функция удаления карточек 
 const deleteImg = function (element) { 
   element.remove(); 
 };
 
 
-/**функция удаления карточки */
+// функция запроса удаления карточки 
 const handleDeleteIconClick = (cardElement, cardId) => {
   removeCard(cardId)
   .then(() => {
@@ -217,7 +225,7 @@ const handleDeleteIconClick = (cardElement, cardId) => {
 };
 
 
-/**функция которая отслеживает постановку лайка */
+// функция отвечает за постановку лайка 
 const handleLikeClick = (cardId, isLiked, card) => {
   changeLikeStatus(cardId, isLiked)
     .then((dataFromServer) => {
@@ -228,7 +236,7 @@ const handleLikeClick = (cardId, isLiked, card) => {
     })
 }
 
-/** открытие попапа для просмотра фотографий по клику на карточку */
+// открытие попапа для просмотра фотографий по клику на карточку 
 const handleCardClick =(data)=>{
   picPopupEl.src = data.link;
   picPopupEl.alt = data.name;

@@ -10,8 +10,7 @@ const dataCard = {
   rubbishButtonSelector: '.element__button-rubbish',
 };
 
-/** находим в html секцию с разметкой для карточек */
-const cardList = document.querySelector(".elements");
+
 /** Находим форму для добавления картинок в DOM */
 const formElementImg = document.querySelector(".form_img");
 const imgInputName = formElementImg.querySelector("#img-name");
@@ -82,7 +81,6 @@ export {
   avatarImage,
   submitButtonProfile,
   validationConfig,
-  cardList,
   formElementImg,
   imgInputName,
   imgInputLink,
