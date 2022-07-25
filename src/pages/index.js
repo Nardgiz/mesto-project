@@ -118,7 +118,7 @@ export function formSubmitHandlerImg(evt) {
   loadSubmitButton(popupAddCard, true);
   addCard(newCard)
     .then((data) => {
-      cardList._renderedItems=[data];
+      cardList.setRenderData([data]);
       cardList.renderItems(userId);
   
 
