@@ -32,26 +32,23 @@ import {
 } from "../utils/constants.js";
 
 import { addInfofromPopup, openPopup, closePopup, closeByCross } from "../components/modal";
-import { toggleButtonState } from "../components/validation.js";
-import { setEventListers } from "../components/validation";
+// import { toggleButtonState } from "../components/validation";
+// import { setEventListers } from "../components/validation";
 import {
   createAvatar,
   createCard,
   handleChangeLikeStatus,
   handleDeleteCard,
 } from "../components/card.js";
-import {
-  getAllInfo,
-  addCard,
-  changeLikeStatus,
-  editProfileAvatar,
-  getProfileInfo,
-  editProfileForm,
-  removeCard
-} from "../components/api.js";
+import {Api, config} from "../components/api.js";
 
 import { loadSubmitButton } from "../utils/utils.js"
+import { FormValidator } from "../components/validation.js";
+export const api = new Api(config);
 
+const profileFormValidator = new FormValidator(validationConfig, formEditProfile);
+const cardFormValidator = new FormValidator(validationConfig, formElementImg);
+const avatarFormValidator = new FormValidator(validationConfig, avatarForm);
 let userId = null;
 
 /** функция, которая создает новую карточку */
@@ -66,7 +63,8 @@ function renderCard(data, container, userId) {
 };
 
 /**получаем информацию о пользователи и о загруженных карточках */
-getAllInfo().then(([cards, user]) => {
+api.getAllInfo()
+.then(([cards, user]) => {
   setUserInfo({
     userName: user.name,
     userDescription: user.about,
@@ -116,7 +114,7 @@ export function submitEditProfileForm(evt) {
     about: jobInput.value,
   }
   loadSubmitButton(popupProfile, true);
-  editProfileForm(newDataUser)
+  api.editProfileForm(newDataUser)
     .then((data) => {
       setUserInfo({
         userName: data.name,
@@ -130,7 +128,7 @@ export function submitEditProfileForm(evt) {
     .finally(() => {
       loadSubmitButton(popupProfile, false);
     })
-    toggleButtonState(submitButtonProfile, false, validationConfig);
+    profileFormValidator._toggleButtonState(submitButtonProfile, false, validationConfig);
 }
 submitButtonProfile.addEventListener("submit", submitEditProfileForm);
 
@@ -142,7 +140,7 @@ export function formSubmitHandlerImg(evt) {
     link: imgInputLink.value,
   };
   loadSubmitButton(popupAddCard, true);
-  addCard(newCard)
+  api.addCard(newCard)
     .then((data) => {
       renderCard(data, cardList, userId);
       closePopup(popupAddCard);
@@ -154,7 +152,7 @@ export function formSubmitHandlerImg(evt) {
     .finally(() => {
       loadSubmitButton(popupAddCard, false);
     })  
-  toggleButtonState(imgButtonSubmit, false, validationConfig);
+    cardFormValidator._toggleButtonState(imgButtonSubmit, false, validationConfig);
 }
 formElementImg.addEventListener("submit", formSubmitHandlerImg);
 
@@ -165,7 +163,7 @@ export function formSubmitHandlerAvatar(evt) {
     avatar: avatarInput.value,
   }
   loadSubmitButton(popupAvatar, true);
-  editProfileAvatar(newAvatar)
+  api.editProfileAvatar(newAvatar)
     .then((dataAvatar) => {
       setUserInfo({
         userAvatar: dataAvatar.avatar
@@ -180,15 +178,15 @@ export function formSubmitHandlerAvatar(evt) {
       loadSubmitButton(popupAvatar, false);
     })  
 
-  toggleButtonState(avatarButtonSubmit, false, validationConfig);
+  this._toggleButtonState(avatarButtonSubmit, false, validationConfig);
 };
 avatarButtonSubmit.addEventListener("click", formSubmitHandlerAvatar);
 
 /**проверка инпутов форм на валидность */
 const enableValidation = (config) => {
-  const forms = document.querySelectorAll(config.formSelector);
+  const forms = document.querySelectorAll(this._formSelector);
   Array.from(forms).forEach((formElement) => {
-    setEventListers(formElement, config);
+    this._setEventListers(formElement, config);
   })
 }
 enableValidation(validationConfig);

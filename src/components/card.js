@@ -7,9 +7,10 @@ import {
   cardList,
   avatarImage
 } from "../utils/constants.js";
-import { removeCard, changeLikeStatus } from "./api";
 
+import {  api } from "../pages/index"
 export { handleChangeLikeStatus, updateLikesState, handleDeleteCard, deleteImg, createAvatar };
+
 
 /** открытие попапа для просмотра фотографий по клику на карточку */
 export const clickImage = function (data) {
@@ -41,7 +42,7 @@ const updateLikesState = (cardElement, likesArray, userId) => {
 }
 /**функция которая отслеживает постановку лайка */
 const handleChangeLikeStatus = (cardId, isLiked, cardElement, userId) => {
-  changeLikeStatus(cardId, isLiked)
+  api.changeLikeStatus(cardId, isLiked)
     .then((dataFromServer) => {
       updateLikesState(cardElement, dataFromServer.likes, userId)
     })
@@ -55,7 +56,7 @@ const deleteImg = function (element) {
 };
 /**функция удаления карточки */
 const handleDeleteCard = (cardElement, cardId) => {
-  removeCard(cardId)
+  api.removeCard(cardId)
   .then(() => {
     deleteImg(cardElement)
   })

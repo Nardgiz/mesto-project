@@ -1,11 +1,11 @@
 .element__picture {
-  max-width: 100%;
-  aspect-ratio: 1/1;
+  max-width: 282px;
+  max-height: 282px;
+  min-width: 282px;
+  min-height: 282px;
   margin: 0;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  background-size: contain;
-  background-repeat: no-repeat;
+  object-fit: cover ;
+  border-radius: 10px 10px 0 0;
 }
 .element__picture:hover {
   opacity: 0.6;
