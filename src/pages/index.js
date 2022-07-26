@@ -31,28 +31,59 @@ import {
   avatarOpenButton,
 } from "../utils/constants.js";
 
-import { addInfofromPopup, openPopup, closePopup, closeByCross } from "../components/modal";
-import { toggleButtonState } from "../components/validation.js";
-import { setEventListers } from "../components/validation";
+import { addInfofromPopup, openPopup, closePopup, closeByCross } from "../components/modal.js";
+import { toggleButtonState } from "../components/Validation.js";
+import { setEventListers } from "../components/Validation.js";
 import {
   createAvatar,
   createCard,
   handleChangeLikeStatus,
   handleDeleteCard,
-} from "../components/card.js";
-import {
-  getAllInfo,
-  addCard,
-  changeLikeStatus,
-  editProfileAvatar,
-  getProfileInfo,
-  editProfileForm,
-  removeCard
-} from "../components/api.js";
+} from "../components/Card.js";
 
 import { loadSubmitButton } from "../utils/utils.js"
 
+import { Api } from "../components/Api.js"
+
+const config = {
+  url: "https://mesto.nomoreparties.co/v1/plus-cohort-13",
+  headers: {
+    authorization: "d1d14902-c78a-4d00-aa9d-9b64f78ed110",
+    "Content-type": "application/json"
+  },
+};
+const api = new Api(config);
+
+import { Card } from "../components/Card.js"
+
 let userId = null;
+
+
+const card = new Card({
+  selector: cardTemplate,
+  data: data,
+  handleChangeLikeStatus: (cardId, isLiked, cardElement, userId) => {
+    changeLikeStatus(cardId, isLiked)
+      .then((dataFromServer) => {
+        card._updateLikesState(cardElement, dataFromServer.likes, userId)
+      })
+      .catch((err) => {
+        console.log(`Ошибка работы лайк ${err.status}`)
+      })
+  },
+  handleDeleteCard: (cardElement, cardId) => {
+    api.removeCard(cardId)
+    .then(() => {
+      card.deleteImg(cardElement)
+    })
+    .catch((err) => {
+      console.log(`Ошибка при удалении ${err.status}`)
+    })
+  },
+  userId: userId })
+
+
+
 
 /** функция, которая создает новую карточку */
 function renderCard(data, container, userId) {
@@ -66,7 +97,7 @@ function renderCard(data, container, userId) {
 };
 
 /**получаем информацию о пользователи и о загруженных карточках */
-getAllInfo().then(([cards, user]) => {
+api.getAllInfo().then(([cards, user]) => {
   setUserInfo({
     userName: user.name,
     userDescription: user.about,
@@ -78,6 +109,8 @@ getAllInfo().then(([cards, user]) => {
     renderCard(card, cardList, userId);
   });
 });
+
+
 /** открытие попапа аватара */
 avatarOpenButton.addEventListener("click", () => {
   openPopup(popupAvatar);
@@ -116,7 +149,7 @@ export function submitEditProfileForm(evt) {
     about: jobInput.value,
   }
   loadSubmitButton(popupProfile, true);
-  editProfileForm(newDataUser)
+  api.editProfileForm(newDataUser)
     .then((data) => {
       setUserInfo({
         userName: data.name,
@@ -142,7 +175,7 @@ export function formSubmitHandlerImg(evt) {
     link: imgInputLink.value,
   };
   loadSubmitButton(popupAddCard, true);
-  addCard(newCard)
+  api.addCard(newCard)
     .then((data) => {
       renderCard(data, cardList, userId);
       closePopup(popupAddCard);
@@ -165,7 +198,7 @@ export function formSubmitHandlerAvatar(evt) {
     avatar: avatarInput.value,
   }
   loadSubmitButton(popupAvatar, true);
-  editProfileAvatar(newAvatar)
+  api.editProfileAvatar(newAvatar)
     .then((dataAvatar) => {
       setUserInfo({
         userAvatar: dataAvatar.avatar
