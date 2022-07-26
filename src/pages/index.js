@@ -31,6 +31,7 @@ import {
   picText
 } from "../utils/constants.js";
 
+<<<<<<< HEAD
 import { addInfofromPopup, openPopup, closePopup, closeByCross } from "../components/modal.js";
 import { toggleButtonState } from "../components/validation.js";
 import { setEventListers } from "../components/validation.js";
@@ -45,13 +46,80 @@ import {
   editProfileForm,
   removeCard
 } from "../components/api.js";
+||||||| fac0fcf
+import { addInfofromPopup, openPopup, closePopup, closeByCross } from "../components/modal";
+import { toggleButtonState } from "../components/validation.js";
+import { setEventListers } from "../components/validation";
+import {
+  createAvatar,
+  createCard,
+  handleChangeLikeStatus,
+  handleDeleteCard,
+} from "../components/card.js";
+import {
+  getAllInfo,
+  addCard,
+  changeLikeStatus,
+  editProfileAvatar,
+  getProfileInfo,
+  editProfileForm,
+  removeCard
+} from "../components/api.js";
+=======
+import { addInfofromPopup, openPopup, closePopup, closeByCross } from "../components/modal";
+// import { toggleButtonState } from "../components/validation";
+// import { setEventListers } from "../components/validation";
+import {
+  createAvatar,
+  createCard,
+  handleChangeLikeStatus,
+  handleDeleteCard,
+} from "../components/card.js";
+import {Api, config} from "../components/api.js";
+>>>>>>> 875216f937cc9168695915ad4b657a6ae0fc93aa
 
 import { loadSubmitButton } from "../utils/utils.js"
+import { FormValidator } from "../components/validation.js";
+export const api = new Api(config);
 
+const profileFormValidator = new FormValidator(validationConfig, formEditProfile);
+const cardFormValidator = new FormValidator(validationConfig, formElementImg);
+const avatarFormValidator = new FormValidator(validationConfig, avatarForm);
 let userId = null;
 let cardList={};
 
 
+<<<<<<< HEAD
+||||||| fac0fcf
+/**получаем информацию о пользователи и о загруженных карточках */
+getAllInfo().then(([cards, user]) => {
+  setUserInfo({
+    userName: user.name,
+    userDescription: user.about,
+    userAvatar: user.avatar
+  })
+  userId = user._id;
+  /**получаем от сервера карточки и вызываем на них метод рендера каждой */
+  cards.reverse().forEach((card) => {
+    renderCard(card, cardList, userId);
+  });
+});
+=======
+/**получаем информацию о пользователи и о загруженных карточках */
+api.getAllInfo()
+.then(([cards, user]) => {
+  setUserInfo({
+    userName: user.name,
+    userDescription: user.about,
+    userAvatar: user.avatar
+  })
+  userId = user._id;
+  /**получаем от сервера карточки и вызываем на них метод рендера каждой */
+  cards.reverse().forEach((card) => {
+    renderCard(card, cardList, userId);
+  });
+});
+>>>>>>> 875216f937cc9168695915ad4b657a6ae0fc93aa
 /** открытие попапа аватара */
 avatarOpenButton.addEventListener("click", () => {
   openPopup(popupAvatar);
@@ -90,7 +158,7 @@ export function submitEditProfileForm(evt) {
     about: jobInput.value,
   }
   loadSubmitButton(popupProfile, true);
-  editProfileForm(newDataUser)
+  api.editProfileForm(newDataUser)
     .then((data) => {
       setUserInfo({
         userName: data.name,
@@ -104,7 +172,7 @@ export function submitEditProfileForm(evt) {
     .finally(() => {
       loadSubmitButton(popupProfile, false);
     })
-    toggleButtonState(submitButtonProfile, false, validationConfig);
+    profileFormValidator._toggleButtonState(submitButtonProfile, false, validationConfig);
 }
 submitButtonProfile.addEventListener("submit", submitEditProfileForm);
 
@@ -116,7 +184,7 @@ export function formSubmitHandlerImg(evt) {
     link: imgInputLink.value,
   };
   loadSubmitButton(popupAddCard, true);
-  addCard(newCard)
+  api.addCard(newCard)
     .then((data) => {
       cardList.setRenderData([data]);
       cardList.renderItems(userId);
@@ -131,7 +199,7 @@ export function formSubmitHandlerImg(evt) {
     .finally(() => {
       loadSubmitButton(popupAddCard, false);
     })  
-  toggleButtonState(imgButtonSubmit, false, validationConfig);
+    cardFormValidator._toggleButtonState(imgButtonSubmit, false, validationConfig);
 }
 formElementImg.addEventListener("submit", formSubmitHandlerImg);
 
@@ -142,7 +210,7 @@ export function formSubmitHandlerAvatar(evt) {
     avatar: avatarInput.value,
   }
   loadSubmitButton(popupAvatar, true);
-  editProfileAvatar(newAvatar)
+  api.editProfileAvatar(newAvatar)
     .then((dataAvatar) => {
       setUserInfo({
         userAvatar: dataAvatar.avatar
@@ -157,15 +225,15 @@ export function formSubmitHandlerAvatar(evt) {
       loadSubmitButton(popupAvatar, false);
     })  
 
-  toggleButtonState(avatarButtonSubmit, false, validationConfig);
+  this._toggleButtonState(avatarButtonSubmit, false, validationConfig);
 };
 avatarButtonSubmit.addEventListener("click", formSubmitHandlerAvatar);
 
 /**проверка инпутов форм на валидность */
 const enableValidation = (config) => {
-  const forms = document.querySelectorAll(config.formSelector);
+  const forms = document.querySelectorAll(this._formSelector);
   Array.from(forms).forEach((formElement) => {
-    setEventListers(formElement, config);
+    this._setEventListers(formElement, config);
   })
 }
 enableValidation(validationConfig);

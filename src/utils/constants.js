@@ -24,7 +24,7 @@ const avatarForm = document.querySelector(".form_avatar");
 const popupAvatar = document.querySelector(".popup_avatar");
 const avatarInput = document.querySelector(".form__input_avatar");
 
-
+ 
 /** ПОПАПЫ */
 /** Находим попап редактирования профиля в DOM */
 const popupProfile = document.querySelector(".popup");

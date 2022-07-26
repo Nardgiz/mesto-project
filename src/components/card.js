@@ -1,4 +1,28 @@
+<<<<<<< HEAD
+||||||| fac0fcf
+import { openPopup } from "./modal";
+import {
+  picPopupEl,
+  picText,
+  popupPicture,
+  cardTemplate,
+  cardList,
+  avatarImage
+} from "../utils/constants.js";
+import { removeCard, changeLikeStatus } from "./api";
+=======
+import { openPopup } from "./modal";
+import {
+  picPopupEl,
+  picText,
+  popupPicture,
+  cardTemplate,
+  cardList,
+  avatarImage
+} from "../utils/constants.js";
+>>>>>>> 875216f937cc9168695915ad4b657a6ae0fc93aa
 
+<<<<<<< HEAD
 //Класс по работе с карточками
 export default class Card {
   constructor(data, cardInfo, userId, {handleCardClick, handleLikeClick, handleDeleteIconClick}){
@@ -15,7 +39,14 @@ export default class Card {
     this._handleLikeClick=handleLikeClick;
     this._handleDeleteIconClick=handleDeleteIconClick;
   };
+||||||| fac0fcf
+export { handleChangeLikeStatus, updateLikesState, handleDeleteCard, deleteImg, createAvatar };
+=======
+import {  api } from "../pages/index"
+export { handleChangeLikeStatus, updateLikesState, handleDeleteCard, deleteImg, createAvatar };
+>>>>>>> 875216f937cc9168695915ad4b657a6ae0fc93aa
 
+<<<<<<< HEAD
   /** функция, которая определяет, поставлен лайк или нет */
   _isLiked(){
     return Boolean(
@@ -58,6 +89,22 @@ export default class Card {
     this._setEventListeners();
     return this._cardElement;
   };
+||||||| fac0fcf
+/** открытие попапа для просмотра фотографий по клику на карточку */
+export const clickImage = function (data) {
+  picPopupEl.src = data.link;
+  picPopupEl.alt = data.name;
+  picText.textContent = data.name;
+  openPopup(popupPicture);
+=======
+
+/** открытие попапа для просмотра фотографий по клику на карточку */
+export const clickImage = function (data) {
+  picPopupEl.src = data.link;
+  picPopupEl.alt = data.name;
+  picText.textContent = data.name;
+  openPopup(popupPicture);
+>>>>>>> 875216f937cc9168695915ad4b657a6ae0fc93aa
 };
 
 
@@ -88,7 +135,69 @@ export default class Card {
     likeButton.classList.remove("element__button_active");
   }
 }
+<<<<<<< HEAD
  */
+||||||| fac0fcf
+/**функция которая отслеживает постановку лайка */
+const handleChangeLikeStatus = (cardId, isLiked, cardElement, userId) => {
+  changeLikeStatus(cardId, isLiked)
+    .then((dataFromServer) => {
+      updateLikesState(cardElement, dataFromServer.likes, userId)
+    })
+    .catch((err) => {
+      console.log(`Ошибка работы лайк ${err.status}`)
+    })
+}
+/** функция удаления карточек */ 
+const deleteImg = function (element) { 
+  element.remove(); 
+};
+/**функция удаления карточки */
+const handleDeleteCard = (cardElement, cardId) => {
+  removeCard(cardId)
+  .then(() => {
+    deleteImg(cardElement)
+  })
+  .catch((err) => {
+    console.log(`Ошибка при удалении ${err.status}`)
+  })
+};
+/**функция, которая обновляет картинку аватара */
+const createAvatar = function (dataAvatar) {
+  avatarImage.src = dataAvatar.link;
+  avatarImage.alt = dataAvatar.name;
+}
+=======
+/**функция которая отслеживает постановку лайка */
+const handleChangeLikeStatus = (cardId, isLiked, cardElement, userId) => {
+  api.changeLikeStatus(cardId, isLiked)
+    .then((dataFromServer) => {
+      updateLikesState(cardElement, dataFromServer.likes, userId)
+    })
+    .catch((err) => {
+      console.log(`Ошибка работы лайк ${err.status}`)
+    })
+}
+/** функция удаления карточек */ 
+const deleteImg = function (element) { 
+  element.remove(); 
+};
+/**функция удаления карточки */
+const handleDeleteCard = (cardElement, cardId) => {
+  api.removeCard(cardId)
+  .then(() => {
+    deleteImg(cardElement)
+  })
+  .catch((err) => {
+    console.log(`Ошибка при удалении ${err.status}`)
+  })
+};
+/**функция, которая обновляет картинку аватара */
+const createAvatar = function (dataAvatar) {
+  avatarImage.src = dataAvatar.link;
+  avatarImage.alt = dataAvatar.name;
+}
+>>>>>>> 875216f937cc9168695915ad4b657a6ae0fc93aa
 
 
 /* export const createCard = function (data, userId, handleChangeLikeStatus, handleDeleteCard) {
