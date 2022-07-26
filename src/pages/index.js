@@ -40,17 +40,16 @@ import {
   handleChangeLikeStatus,
   handleDeleteCard,
 } from "../components/card.js";
-import {
-  getAllInfo,
-  addCard,
-  changeLikeStatus,
-  editProfileAvatar,
-  getProfileInfo,
-  editProfileForm,
-  removeCard
-} from "../components/api.js";
-
 import { loadSubmitButton } from "../utils/utils.js"
+
+
+/**использование и назначение класса АПИ */
+import { Api, config } from "../components/Api.js";
+
+export const api = new Api(config);
+
+
+
 
 let userId = null;
 
@@ -66,7 +65,7 @@ function renderCard(data, container, userId) {
 };
 
 /**получаем информацию о пользователи и о загруженных карточках */
-getAllInfo().then(([cards, user]) => {
+api.getAllInfo().then(([cards, user]) => {
   setUserInfo({
     userName: user.name,
     userDescription: user.about,
@@ -116,7 +115,7 @@ export function submitEditProfileForm(evt) {
     about: jobInput.value,
   }
   loadSubmitButton(popupProfile, true);
-  editProfileForm(newDataUser)
+  api.editProfileForm(newDataUser)
     .then((data) => {
       setUserInfo({
         userName: data.name,
@@ -142,7 +141,7 @@ export function formSubmitHandlerImg(evt) {
     link: imgInputLink.value,
   };
   loadSubmitButton(popupAddCard, true);
-  addCard(newCard)
+  api.addCard(newCard)
     .then((data) => {
       renderCard(data, cardList, userId);
       closePopup(popupAddCard);
@@ -165,7 +164,7 @@ export function formSubmitHandlerAvatar(evt) {
     avatar: avatarInput.value,
   }
   loadSubmitButton(popupAvatar, true);
-  editProfileAvatar(newAvatar)
+  api.editProfileAvatar(newAvatar)
     .then((dataAvatar) => {
       setUserInfo({
         userAvatar: dataAvatar.avatar
