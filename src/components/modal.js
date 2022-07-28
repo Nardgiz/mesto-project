@@ -1,10 +1,5 @@
 /** добавляем функцию, которая отвечает за открытие попап, отвечающего за редактирование профиля */
-import {
-  nameInput,
-  jobInput,
-  profileName,
-  profileJob,
-} from "../utils/constants";
+
 
 /**закрытие по esc и overlay 
 const closeByEscape = (evt) => {
@@ -31,7 +26,7 @@ const overlay = (evt) => {
   popup.addEventListener("mousedown", overlay);
 };*/
 
-/** функция, которая выводит в попап, указанные имя и деятельность */
+/** функция, которая выводит в попап, указанные имя и деятельность 
 function addInfofromPopup() {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
@@ -49,5 +44,5 @@ const closePopup = (popup) => {
   allCrosses.forEach((cross) => {
     cross.addEventListener('click', closePopup)
   })
-}/*
+}*/
 

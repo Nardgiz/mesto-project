@@ -35,7 +35,7 @@ import { addInfofromPopup, openPopup, closePopup, closeByCross } from "../compon
 import { toggleButtonState } from "../components/validation.js";
 import { setEventListers } from "../components/validation";
 import {
-  createAvatar,
+
   createCard,
   handleChangeLikeStatus,
   handleDeleteCard,

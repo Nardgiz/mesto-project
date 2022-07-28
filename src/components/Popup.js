@@ -5,19 +5,19 @@ export class Popup {
 
     openPopup() {
         this._popupSelector.classList.add("popup_opened");
-        document.addEventListener("keydown", closeByEscape);
-        this._popupSelector.addEventListener("mousedown", overlay);
+        document.addEventListener("keydown", this._closeByEscape);
+        //this._popupSelector.addEventListener("mousedown", overlay);
     };
 
     //добавляем функцию для закрытия попапа
     closePopup() {
         this._popupSelector.classList.remove("popup_opened");
-        document.removeEventListener("keydown", closeByEscape);
-        this._popupSelector.removeEventListener("mousedown", overlay);
+        document.removeEventListener("keydown", this._closeByEscape);
+       // this._popupSelector.removeEventListener("mousedown", overlay);
     };
 
     /**закрытие по esc*/
-    closeByEscape(evt) {
+    _closeByEscape(evt) {
         if (evt.key === "Escape") {
         const activePopup = document.querySelector(".popup_opened");
         this._closePopup(activePopup);
