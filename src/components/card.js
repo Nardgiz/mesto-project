@@ -1,28 +1,3 @@
-<<<<<<< HEAD
-||||||| fac0fcf
-import { openPopup } from "./modal";
-import {
-  picPopupEl,
-  picText,
-  popupPicture,
-  cardTemplate,
-  cardList,
-  avatarImage
-} from "../utils/constants.js";
-import { removeCard, changeLikeStatus } from "./api";
-=======
-import { openPopup } from "./modal";
-import {
-  picPopupEl,
-  picText,
-  popupPicture,
-  cardTemplate,
-  cardList,
-  avatarImage
-} from "../utils/constants.js";
->>>>>>> 875216f937cc9168695915ad4b657a6ae0fc93aa
-
-<<<<<<< HEAD
 //Класс по работе с карточками
 export default class Card {
   constructor(data, cardInfo, userId, {handleCardClick, handleLikeClick, handleDeleteIconClick}){
@@ -39,14 +14,7 @@ export default class Card {
     this._handleLikeClick=handleLikeClick;
     this._handleDeleteIconClick=handleDeleteIconClick;
   };
-||||||| fac0fcf
-export { handleChangeLikeStatus, updateLikesState, handleDeleteCard, deleteImg, createAvatar };
-=======
-import {  api } from "../pages/index"
-export { handleChangeLikeStatus, updateLikesState, handleDeleteCard, deleteImg, createAvatar };
->>>>>>> 875216f937cc9168695915ad4b657a6ae0fc93aa
 
-<<<<<<< HEAD
   /** функция, которая определяет, поставлен лайк или нет */
   _isLiked(){
     return Boolean(
@@ -89,22 +57,6 @@ export { handleChangeLikeStatus, updateLikesState, handleDeleteCard, deleteImg, 
     this._setEventListeners();
     return this._cardElement;
   };
-||||||| fac0fcf
-/** открытие попапа для просмотра фотографий по клику на карточку */
-export const clickImage = function (data) {
-  picPopupEl.src = data.link;
-  picPopupEl.alt = data.name;
-  picText.textContent = data.name;
-  openPopup(popupPicture);
-=======
-
-/** открытие попапа для просмотра фотографий по клику на карточку */
-export const clickImage = function (data) {
-  picPopupEl.src = data.link;
-  picPopupEl.alt = data.name;
-  picText.textContent = data.name;
-  openPopup(popupPicture);
->>>>>>> 875216f937cc9168695915ad4b657a6ae0fc93aa
 };
 
 
@@ -126,78 +78,14 @@ export const clickImage = function (data) {
 /* const updateLikesState = (cardElement, likesArray, userId) => {
   const likeButton = cardElement.querySelector(".element__button");
   const likeAmount = cardElement.querySelector(".element__like-amount");
-
   likeAmount.textContent = likesArray.length;
-
   if(isLiked(likesArray, userId)) {
     likeButton.classList.add("element__button_active");
   } else {
     likeButton.classList.remove("element__button_active");
   }
 }
-<<<<<<< HEAD
  */
-||||||| fac0fcf
-/**функция которая отслеживает постановку лайка */
-const handleChangeLikeStatus = (cardId, isLiked, cardElement, userId) => {
-  changeLikeStatus(cardId, isLiked)
-    .then((dataFromServer) => {
-      updateLikesState(cardElement, dataFromServer.likes, userId)
-    })
-    .catch((err) => {
-      console.log(`Ошибка работы лайк ${err.status}`)
-    })
-}
-/** функция удаления карточек */ 
-const deleteImg = function (element) { 
-  element.remove(); 
-};
-/**функция удаления карточки */
-const handleDeleteCard = (cardElement, cardId) => {
-  removeCard(cardId)
-  .then(() => {
-    deleteImg(cardElement)
-  })
-  .catch((err) => {
-    console.log(`Ошибка при удалении ${err.status}`)
-  })
-};
-/**функция, которая обновляет картинку аватара */
-const createAvatar = function (dataAvatar) {
-  avatarImage.src = dataAvatar.link;
-  avatarImage.alt = dataAvatar.name;
-}
-=======
-/**функция которая отслеживает постановку лайка */
-const handleChangeLikeStatus = (cardId, isLiked, cardElement, userId) => {
-  api.changeLikeStatus(cardId, isLiked)
-    .then((dataFromServer) => {
-      updateLikesState(cardElement, dataFromServer.likes, userId)
-    })
-    .catch((err) => {
-      console.log(`Ошибка работы лайк ${err.status}`)
-    })
-}
-/** функция удаления карточек */ 
-const deleteImg = function (element) { 
-  element.remove(); 
-};
-/**функция удаления карточки */
-const handleDeleteCard = (cardElement, cardId) => {
-  api.removeCard(cardId)
-  .then(() => {
-    deleteImg(cardElement)
-  })
-  .catch((err) => {
-    console.log(`Ошибка при удалении ${err.status}`)
-  })
-};
-/**функция, которая обновляет картинку аватара */
-const createAvatar = function (dataAvatar) {
-  avatarImage.src = dataAvatar.link;
-  avatarImage.alt = dataAvatar.name;
-}
->>>>>>> 875216f937cc9168695915ad4b657a6ae0fc93aa
 
 
 /* export const createCard = function (data, userId, handleChangeLikeStatus, handleDeleteCard) {
@@ -210,24 +98,18 @@ const createAvatar = function (dataAvatar) {
   cardImage.src = data.link;
   cardImage.alt = data.name;
   cardText.textContent = data.name;
-
   updateLikesState(cardElement, data.likes, userId )
-
   if (data.owner._id !== userId) {
     rubbishButton.remove();
   }
-
   cardImage.addEventListener("click", () => clickImage(data));
-
   likeButton.addEventListener("click", () => {
     handleChangeLikeStatus(data._id, likeButton.classList.contains("element__button_active"), cardElement, userId);
   });
-
   // Добавляем работу rubbish
   rubbishButton.addEventListener("click", function () {
     handleDeleteCard(cardElement, data._id)
   });
-
   return cardElement;
 } */
 
@@ -236,8 +118,6 @@ const createAvatar = function (dataAvatar) {
 const deleteImg = function (element) { 
   element.remove(); 
 };
-
-
 // функция удаления карточки 
 const handleDeleteCard = (cardElement, cardId) => {
   removeCard(cardId)
@@ -248,14 +128,11 @@ const handleDeleteCard = (cardElement, cardId) => {
     console.log(`Ошибка при удалении ${err.status}`)
   })
 };
-
-
 // функция, которая обновляет картинку аватара 
 const createAvatar = function (dataAvatar) {
   avatarImage.src = dataAvatar.link;
   avatarImage.alt = dataAvatar.name;
 }
-
 // функция которая отслеживает постановку лайка
 const handleChangeLikeStatus = (cardId, isLiked, cardElement, userId) => {
   changeLikeStatus(cardId, isLiked)
@@ -266,7 +143,6 @@ const handleChangeLikeStatus = (cardId, isLiked, cardElement, userId) => {
       console.log(`Ошибка работы лайк ${err.status}`)
     })
 }
-
 // открытие попапа для просмотра фотографий по клику на карточку 
 export const clickImage = function (data) {
   picPopupEl.src = data.link;

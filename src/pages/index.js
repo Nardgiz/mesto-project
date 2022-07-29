@@ -31,95 +31,24 @@ import {
   picText
 } from "../utils/constants.js";
 
-<<<<<<< HEAD
-import { addInfofromPopup, openPopup, closePopup, closeByCross } from "../components/modal.js";
-import { toggleButtonState } from "../components/validation.js";
-import { setEventListers } from "../components/validation.js";
-import Card from '../components/card.js';
-import Section from '../components/section.js';
-import {
-  getAllInfo,
-  addCard,
-  changeLikeStatus,
-  editProfileAvatar,
-  getProfileInfo,
-  editProfileForm,
-  removeCard
-} from "../components/api.js";
-||||||| fac0fcf
-import { addInfofromPopup, openPopup, closePopup, closeByCross } from "../components/modal";
-import { toggleButtonState } from "../components/validation.js";
-import { setEventListers } from "../components/validation";
-import {
-  createAvatar,
-  createCard,
-  handleChangeLikeStatus,
-  handleDeleteCard,
-} from "../components/card.js";
-import {
-  getAllInfo,
-  addCard,
-  changeLikeStatus,
-  editProfileAvatar,
-  getProfileInfo,
-  editProfileForm,
-  removeCard
-} from "../components/api.js";
-=======
-import { addInfofromPopup, openPopup, closePopup, closeByCross } from "../components/modal";
-// import { toggleButtonState } from "../components/validation";
-// import { setEventListers } from "../components/validation";
-import {
-  createAvatar,
-  createCard,
-  handleChangeLikeStatus,
-  handleDeleteCard,
-} from "../components/card.js";
-import {Api, config} from "../components/api.js";
->>>>>>> 875216f937cc9168695915ad4b657a6ae0fc93aa
+import { addInfofromPopup } from "../components/modal.js";
+import Card from '../components/Card.js';
+import Section from '../components/Section.js';
+import {Api, config} from "../components/Api.js";
 
-import { loadSubmitButton } from "../utils/utils.js"
-import { FormValidator } from "../components/validation.js";
-export const api = new Api(config);
 
 const profileFormValidator = new FormValidator(validationConfig, formEditProfile);
 const cardFormValidator = new FormValidator(validationConfig, formElementImg);
 const avatarFormValidator = new FormValidator(validationConfig, avatarForm);
+
+import { loadSubmitButton } from "../utils/utils.js"
+import { FormValidator } from "../components/FormValidator.js";
+export const api = new Api(config);
+
 let userId = null;
 let cardList={};
 
 
-<<<<<<< HEAD
-||||||| fac0fcf
-/**получаем информацию о пользователи и о загруженных карточках */
-getAllInfo().then(([cards, user]) => {
-  setUserInfo({
-    userName: user.name,
-    userDescription: user.about,
-    userAvatar: user.avatar
-  })
-  userId = user._id;
-  /**получаем от сервера карточки и вызываем на них метод рендера каждой */
-  cards.reverse().forEach((card) => {
-    renderCard(card, cardList, userId);
-  });
-});
-=======
-/**получаем информацию о пользователи и о загруженных карточках */
-api.getAllInfo()
-.then(([cards, user]) => {
-  setUserInfo({
-    userName: user.name,
-    userDescription: user.about,
-    userAvatar: user.avatar
-  })
-  userId = user._id;
-  /**получаем от сервера карточки и вызываем на них метод рендера каждой */
-  cards.reverse().forEach((card) => {
-    renderCard(card, cardList, userId);
-  });
-});
->>>>>>> 875216f937cc9168695915ad4b657a6ae0fc93aa
 /** открытие попапа аватара */
 avatarOpenButton.addEventListener("click", () => {
   openPopup(popupAvatar);
@@ -158,7 +87,7 @@ export function submitEditProfileForm(evt) {
     about: jobInput.value,
   }
   loadSubmitButton(popupProfile, true);
-  api.editProfileForm(newDataUser)
+  editProfileForm(newDataUser)
     .then((data) => {
       setUserInfo({
         userName: data.name,
@@ -184,7 +113,7 @@ export function formSubmitHandlerImg(evt) {
     link: imgInputLink.value,
   };
   loadSubmitButton(popupAddCard, true);
-  api.addCard(newCard)
+  addCard(newCard)
     .then((data) => {
       cardList.setRenderData([data]);
       cardList.renderItems(userId);
@@ -225,18 +154,11 @@ export function formSubmitHandlerAvatar(evt) {
       loadSubmitButton(popupAvatar, false);
     })  
 
-  this._toggleButtonState(avatarButtonSubmit, false, validationConfig);
+    avatarFormValidator._toggleButtonState(avatarButtonSubmit, false, validationConfig);
 };
 avatarButtonSubmit.addEventListener("click", formSubmitHandlerAvatar);
 
-/**проверка инпутов форм на валидность */
-const enableValidation = (config) => {
-  const forms = document.querySelectorAll(this._formSelector);
-  Array.from(forms).forEach((formElement) => {
-    this._setEventListers(formElement, config);
-  })
-}
-enableValidation(validationConfig);
+
 
 /**функция, которая обновляет картинку аватара */
 const createAvatar = function (dataAvatar) {
@@ -247,7 +169,7 @@ const createAvatar = function (dataAvatar) {
 
 
 /**получаем информацию о пользователи и о загруженных карточках */
-getAllInfo().then(([cards, user]) => {
+api.getAllInfo().then(([cards, user]) => {
   setUserInfo({
     userName: user.name,
     userDescription: user.about,
@@ -283,7 +205,7 @@ const deleteImg = function (element) {
 
 // функция запроса удаления карточки 
 const handleDeleteIconClick = (cardElement, cardId) => {
-  removeCard(cardId)
+  api.removeCard(cardId)
   .then(() => {
     deleteImg(cardElement)
   })
@@ -295,7 +217,7 @@ const handleDeleteIconClick = (cardElement, cardId) => {
 
 // функция отвечает за постановку лайка 
 const handleLikeClick = (cardId, isLiked, card) => {
-  changeLikeStatus(cardId, isLiked)
+  api.changeLikeStatus(cardId, isLiked)
     .then((dataFromServer) => {
       card.updateLikesState(dataFromServer);
     })
