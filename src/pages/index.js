@@ -202,7 +202,7 @@ cardList.setItem(card.createCard());
 
 // функция удаления карточек 
 const deleteImg = function (element) { 
-  element.remove(); 
+  element.remove();
 };
 
 
