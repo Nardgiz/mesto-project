@@ -1,10 +1,21 @@
 export class FormValidator{
-  constructor({config, errorElement, inputElement, button}, formElement) {
+  constructor({config}, formElement) {
     this._config = config;
-    this._formElement = formElement;
-    this._errorElement = errorElement;
-    this._inputElement = inputElement;
-    this._button = button;
+    //this._formElement = formElement;
+    //this._errorElement = errorElement;
+    //this._inputElement = inputElement;
+    //this._button = button;
+
+
+
+    const validationConfig = {
+      formSelector: ".form",
+      inputSelector: ".form__input",
+      submitButtonSelector: ".form__button",
+      inactiveButtonClass: "form__button_invalid",
+      inputErrorClass: "form__input_invalid",
+      errorClass: "error",
+    };
 
     // this._inputErrorClass = data.inputErrorClass;
     //this._inputSelector = data.inputSelector;

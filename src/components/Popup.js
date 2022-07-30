@@ -6,14 +6,12 @@ export class Popup {
     openPopup() {
         this._popupSelector.classList.add("popup_opened");
         document.addEventListener("keydown", this._closeByEscape);
-        //this._popupSelector.addEventListener("mousedown", overlay);
     };
 
     //добавляем функцию для закрытия попапа
     closePopup() {
         this._popupSelector.classList.remove("popup_opened");
         document.removeEventListener("keydown", this._closeByEscape);
-       // this._popupSelector.removeEventListener("mousedown", overlay);
     };
 
     /**закрытие по esc*/
@@ -40,6 +38,6 @@ export class Popup {
             evt.target.classList.contains("close-item")) {
                 this.closePopup(activePopup);
             };
-            })
+        })
       }
 }

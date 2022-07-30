@@ -1,4 +1,4 @@
-/* import "./index.css"; */
+import "./index.css";
 import {
   dataCard,
   formElementImg,
@@ -35,6 +35,8 @@ import { addInfofromPopup } from "../components/modal.js";
 import Card from '../components/Card.js';
 import Section from '../components/Section.js';
 import {Api, config} from "../components/Api.js";
+import { PopupWithForm } from "../components/PopupWithForm.js";
+import { PopupWithImage } from "../components/PopupWithImage.js";
 
 
 const profileFormValidator = new FormValidator(validationConfig, formEditProfile);
@@ -56,12 +58,12 @@ avatarOpenButton.addEventListener("click", () => {
 
 /** открытие попапа редактирования */
 popupButton.addEventListener("click", function () {
-  openPopup(popupProfile);
+  formPopupEdit.openPopup(popupProfile);
   addInfofromPopup(popupProfile);
 });
 /** закрытие попап редактирования профиля */
 popupButtonClose.addEventListener("click", function () {
-  closePopup(popupProfile);
+  formPopupEdit.closePopup(popupProfile);
 });
 
 /** открытие попапа для загрузки новых карточек */
@@ -80,20 +82,21 @@ picPopupEl.addEventListener("click", function () {
 });
 
 /** Обработчик «отправки» формы редактироания профиля*/
-export function submitEditProfileForm(evt) {
+const formPopupEdit = new PopupWithForm(".popup_profile", {submitEditProfileForm: (evt) => submitEditProfileForm(evt)})
+function submitEditProfileForm(evt) {
   evt.preventDefault();
   const newDataUser = {
     name: nameInput.value,
     about: jobInput.value,
   }
   loadSubmitButton(popupProfile, true);
-  editProfileForm(newDataUser)
+  api.editProfileForm(newDataUser)
     .then((data) => {
       setUserInfo({
         userName: data.name,
         userDescription: data.about,
       })
-      closePopup(popupProfile);  
+      formPopupEdit.closePopup(popupProfile);  
     })
     .catch((err) => {
       console.log(`Ошибка загрузки данных ${err}`)
@@ -101,7 +104,7 @@ export function submitEditProfileForm(evt) {
     .finally(() => {
       loadSubmitButton(popupProfile, false);
     })
-    profileFormValidator._toggleButtonState(submitButtonProfile, false, validationConfig);
+    profileFormValidator.toggleButtonState(submitButtonProfile, false, validationConfig);
 }
 submitButtonProfile.addEventListener("submit", submitEditProfileForm);
 
@@ -113,7 +116,7 @@ export function formSubmitHandlerImg(evt) {
     link: imgInputLink.value,
   };
   loadSubmitButton(popupAddCard, true);
-  addCard(newCard)
+  api.addCard(newCard)
     .then((data) => {
       cardList.setRenderData([data]);
       cardList.renderItems(userId);

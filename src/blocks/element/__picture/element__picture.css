@@ -1,49 +1,32 @@
 .element__picture {
-<<<<<<< HEAD
-<<<<<<< HEAD
   width: 100%;
   object-fit:cover;
   aspect-ratio: 1;
-||||||| fac0fcf
   max-width: 100%;
   aspect-ratio: 1/1;
-=======
   max-width: 282px;
   max-height: 282px;
   min-width: 282px;
   min-height: 282px;
->>>>>>> 875216f937cc9168695915ad4b657a6ae0fc93aa
-||||||| c6750ef
   max-width: 100%;
   aspect-ratio: 1/1;
-=======
   width: 100%;
   object-fit:cover;
   aspect-ratio: 1;
->>>>>>> nardgiz/mesto-update
   margin: 0;
-<<<<<<< HEAD
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   /* background-size: contain;
   background-repeat: no-repeat; */
-||||||| fac0fcf
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-<<<<<<< HEAD
-  background-size: contain;
-  background-repeat: no-repeat;
-=======
   object-fit: cover ;
   border-radius: 10px 10px 0 0;
->>>>>>> 875216f937cc9168695915ad4b657a6ae0fc93aa
-||||||| c6750ef
   background-size: contain;
   background-repeat: no-repeat;
-=======
   /* background-size: contain;
   background-repeat: no-repeat; */
->>>>>>> nardgiz/mesto-update
+
 }
 .element__picture:hover {
   opacity: 0.6;
