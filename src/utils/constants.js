@@ -1,9 +1,16 @@
+//Конфиг для создания карточки
+const dataCard = {
+  templateSelector: '#element-template',
+  cardSelector: '.element',
+  cardPictureSelector: '.element__picture',
+  cardTextSelector: '.element__text',
+  likeButtonSelector: '.element__button',
+  likeButtonActiveClass: 'element__button_active',
+  likeCounterSelector: '.element__like-amount',
+  rubbishButtonSelector: '.element__button-rubbish',
+};
 
-/** находим в html секцию с разметкой для карточек */
-const cardList = document.querySelector(".elements");
-const cardTemplate = document
-  .querySelector("#element-template")
-  .content.querySelector(".element");
+
 /** Находим форму для добавления картинок в DOM */
 const formElementImg = document.querySelector(".form_img");
 const imgInputName = formElementImg.querySelector("#img-name");
@@ -48,6 +55,9 @@ const jobInput = formEditProfile.querySelector("#job");
 const profileName = document.querySelector(".profile__firstname");
 const profileJob = document.querySelector(".profile__job");
 
+const buttonCloseClass = 'close-item';
+const popupOpenedClass = "popup_opened";
+
 const validationConfig = {
   formSelector: ".form",
   inputSelector: ".form__input",
@@ -57,15 +67,31 @@ const validationConfig = {
   errorClass: "error",
 };
 
-const setUserInfo = ({userName, userDescription, userAvatar}) => {
-  if (userName) profileName.textContent = userName;
-  if (userDescription) profileJob.textContent = userDescription;
-  if (userAvatar) avatarImage.src = userAvatar;
-};
+const configPopupImage = {
+image:'.popup__picture',
+text: '.popup__text'
+}
+
+const popupFormInputsSelectors ={
+  form:'.form',
+  input:'.form__input'
+}
+
+const configUserInfo = {
+  firstnameSelector: '.profile__firstname',
+  jobAboutSelector: '.profile__job',
+  avatarSelector:'.profile__avatar'
+  }
+
 
 export {
+  popupOpenedClass,
+  buttonCloseClass,
+  popupFormInputsSelectors,
+  configUserInfo,
+  configPopupImage,
+  dataCard,
   avatarInput,
-  setUserInfo,
   popupAvatar,
   avatarOpenButton,
   avatarForm,
@@ -73,8 +99,6 @@ export {
   avatarImage,
   submitButtonProfile,
   validationConfig,
-  cardList,
-  cardTemplate,
   formElementImg,
   imgInputName,
   imgInputLink,
