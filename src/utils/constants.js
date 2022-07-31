@@ -16,7 +16,7 @@ const formElementImg = document.querySelector(".form_img");
 const imgInputName = formElementImg.querySelector("#img-name");
 const imgInputLink = formElementImg.querySelector("#img-link");
 const imgButtonSubmit = formElementImg.querySelector(".form__button_img");
-
+const popupApproveDeleteCard=document.querySelector('.popup_request-delete-card');
 const avatarImage = document.querySelector(".profile__avatar");
 const avatarOpenButton = document.querySelector(".profile__avatar-button");
 const avatarButtonSubmit = document.querySelector(".form__button_avatar");
@@ -58,6 +58,7 @@ const profileJob = document.querySelector(".profile__job");
 const buttonCloseClass = 'close-item';
 const popupOpenedClass = "popup_opened";
 
+
 const validationConfig = {
   formSelector: ".form",
   inputSelector: ".form__input",
@@ -67,14 +68,22 @@ const validationConfig = {
   errorClass: "error",
 };
 
+const apiRequestConfig = {
+  url: "https://mesto.nomoreparties.co/v1/plus-cohort-13",
+  headers: {
+    authorization: "529f3fca-6bdc-4e81-9927-7f5521acabce",
+    "Content-type": "application/json"
+  },
+};
+
 const configPopupImage = {
 image:'.popup__picture',
 text: '.popup__text'
 }
 
 const popupFormInputsSelectors ={
-  form:'.form',
-  input:'.form__input'
+  form:'form',
+  input:'form__input'
 }
 
 const configUserInfo = {
@@ -85,6 +94,8 @@ const configUserInfo = {
 
 
 export {
+  popupApproveDeleteCard,
+  apiRequestConfig,
   popupOpenedClass,
   buttonCloseClass,
   popupFormInputsSelectors,

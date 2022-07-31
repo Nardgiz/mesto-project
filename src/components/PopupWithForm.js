@@ -4,8 +4,8 @@ export class PopupWithForm extends Popup {
     constructor(popupSelector,buttonCloseClass, popupOpenedClass, popupFormsSelectors, {submitEditProfileForm}) {
         super(popupSelector, buttonCloseClass, popupOpenedClass);
         this._formSubmitHandler = submitEditProfileForm;
-        this._formInputsElements=this._popupElement.querySelectorAll(popupFormsSelectors.input);
-        this._formsElements=document.querySelectorAll(popupFormsSelectors.form);
+        this._formInputsElements=this._popupElement.querySelectorAll(`.${popupFormsSelectors.input}`);
+        this._formsElements=document.querySelectorAll(`.${popupFormsSelectors.form}`);
 
     }
 
@@ -28,9 +28,9 @@ export class PopupWithForm extends Popup {
 
     closePopup() {
         super.closePopup();
-        return this._formsElements.forEach((form) => {
+        setTimeout(()=>{this._formsElements.forEach((form) => {
             form.reset()
-        })
+        })}, 600);
     }
 
 }
