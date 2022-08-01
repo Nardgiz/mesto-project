@@ -1,6 +1,5 @@
 
-
-class Api {
+export class Api {
 /** функция по проверке промисов */
 #onResponse = (res) => {
   return res.ok ? res.json() : Promise.reject(res);
@@ -9,7 +8,6 @@ class Api {
     this._url = config.url;
     this._headers = config.headers;
   }
-
 
 /** 3.загрузка инфо о пользователе с сервера */
 getProfileInfo() {
@@ -77,8 +75,3 @@ editProfileAvatar(data) {
   .then((res) => this.#onResponse(res));;
 }
 }
-
-
-
-
-export {Api};
