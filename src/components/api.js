@@ -1,10 +1,5 @@
-export const config = {
-  url: "https://mesto.nomoreparties.co/v1/plus-cohort-13",
-  headers: {
-    authorization: "d1d14902-c78a-4d00-aa9d-9b64f78ed110",
-    "Content-type": "application/json"
-  },
-};
+
+
 class Api {
 /** функция по проверке промисов */
 #onResponse = (res) => {
