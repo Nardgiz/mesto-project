@@ -27,7 +27,7 @@ const avatarInput = document.querySelector(".form__input_avatar");
  
 /** ПОПАПЫ */
 /** Находим попап редактирования профиля в DOM */
-const popupProfile = document.querySelector(".popup");
+const popupProfile = document.querySelector(".popup_profile");
 /** Находим кнопку, которая должна закрывать попап, отвечающий за редактирования профиля */
 const popupButtonClose = document.querySelector(".close-item");
 /** Находим попап для добавления изображений */
