@@ -39,6 +39,8 @@
 @import url(../blocks/form/__input/form__input.css);
 @import url(../blocks/form/__input/_invalid/form__input_invalid.css);
 @import url(../blocks/form/__button/form__button.css);
+@import url(../blocks/form/__button/_avatar/form__button_avatar.css);
+@import url(../blocks/form/__button/_request-delete-card/form__button_request-delete-card.css);
 @import url(../blocks/form/__button/_invalid/form__button_invalid.css);
 @import url(../blocks/error/error.css);
 @import url(../blocks/popup/__container/_avatar/popup__container_avatar.css);

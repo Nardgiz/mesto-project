@@ -3,9 +3,9 @@ const loadSubmitButton = (popup, isLoading) => {
   const allSubmitButtons = popup.querySelectorAll(".form__button");
   allSubmitButtons.forEach((button) => {
     if (isLoading) {
-      button.value = "Сохранение...";
+      button.textContent+='...';
     } else {
-      button.value = "Сохранить";
+      button.textContent=button.textContent.slice(0,-3);
     }
   });
 };
