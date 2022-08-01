@@ -10,16 +10,13 @@ import {
   dataCard,
   formElementImg,
   formEditProfile,
-  imgButtonSubmit,
   addImg,
   popupButton,
   popupAddCard,
   popupProfile,
   validationConfig,
   avatarForm,
-  avatarButtonSubmit,
   popupAvatar,
-  submitButtonProfile,
   avatarOpenButton,
 } from "../utils/constants.js";
 
@@ -66,9 +63,9 @@ deletePopup.setEventListeners();
 
 // открытие попапа редактирования 
 popupButton.addEventListener("click", function () {
-  profileFormValidator.enableValidation()
-  formPopupEdit.openPopup();
   formPopupEdit.setDefaultValues(userInfo.getUserInfo());
+  profileFormValidator.checkInputs();
+  formPopupEdit.openPopup();
 });
 
 
@@ -96,7 +93,7 @@ function submitEditProfileForm(evt, [name, about]) {
 
 // открытие попапа для загрузки новых карточек 
 addImg.addEventListener("click", function () {
-  cardFormValidator.enableValidation();
+  cardFormValidator.checkInputs();
   formImageAdd.openPopup();
 });
 
@@ -127,7 +124,7 @@ function formSubmitHandlerImg(evt, [name, link]) {
 
 // открытие попапа аватара 
 avatarOpenButton.addEventListener("click", () => {
-  avatarFormValidator.enableValidation();
+  avatarFormValidator.checkInputs();
   formAvatarAdd.openPopup();
 });
 

@@ -15,14 +15,14 @@ export class FormValidator{
 
 
   /**  Функция, которая добавляет класс с ошибкой */
-  _showError = (inputElement, errorMessage) => {
+  _showError(inputElement, errorMessage) {
     const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
     errorElement.classList.add(this._inputErrorClass);
     inputElement.classList.add(this._inputErrorClass);
     errorElement.textContent = errorMessage
   };
   /** Функция, которая удаляет класс с ошибкой */
-  _hideError = (inputElement) => {
+  _hideError(inputElement) {
     const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
     inputElement.classList.remove(this._inputErrorClass);
     errorElement.classList.remove(this._inputErrorClass);
@@ -30,8 +30,7 @@ export class FormValidator{
 
   };
   /** Функция, которая проверяет валидность поля */
-  _checkInputValidity = (inputElement) => {
-
+  _checkInputValidity(inputElement) {
     if (!inputElement.validity.valid) {
       this._showError(inputElement, inputElement.validationMessage);
     } else {
@@ -39,47 +38,40 @@ export class FormValidator{
     }
   };
 
-  _includInputValid(inputList) {
-    return inputList.some((inputElement)=> {
+  _includInputValid() {
+    return this._inputList.some((inputElement)=> {
       return !inputElement.validity.valid
     })
   }
-  _toggleButtonState = () => {
-    if (this._includInputValid(this._inputList)) {
+
+
+  _toggleButtonState(){
+    if (this._includInputValid()) {
+      this._button.classList.add(this._inactiveButtonClass);
+      this._button.disabled = true;
+    } else {
       this._button.classList.remove(this._inactiveButtonClass);
       this._button.disabled = false;
-    } else {
-      this._button.classList.add(this._inactiveButtonClass);
-      this._button.disabled = "disabled";
     }
   };
 
-  _setEventListers = () => {
-
-    this._toggleButtonState();
-
+  _setEventListers() {
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
-
         this._checkInputValidity(inputElement);
         this._toggleButtonState();
       });
     });
   };
-/*   deleteErrors() {
+
+ checkInputs() {
+    this._toggleButtonState();
     this._inputList.forEach(inputElement => {
-      this._hideError(inputElement)
+      this._hideError(inputElement);
     })
   }
- */
-  /**проверка инпутов форм на валидность */
 
-  enableButton() {
-    this._button.classList.remove(this._inactiveButtonClass)
-    this._button.disbaled = true
-  }
-
-  enableValidation = () => {
+  enableValidation() {
       this._setEventListers()
   }
 } 
