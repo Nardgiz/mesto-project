@@ -41,7 +41,7 @@ export class FormValidator{
 
   _includInputValid(inputList) {
     return inputList.some((inputElement)=> {
-      return inputElement.validity.valid
+      return !inputElement.validity.valid
     })
   }
   _toggleButtonState = () => {
@@ -66,12 +66,12 @@ export class FormValidator{
       });
     });
   };
-  deleteErrors() {
+/*   deleteErrors() {
     this._inputList.forEach(inputElement => {
       this._hideError(inputElement)
     })
   }
-
+ */
   /**проверка инпутов форм на валидность */
 
   enableButton() {
