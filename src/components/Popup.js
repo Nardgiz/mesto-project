@@ -1,43 +1,39 @@
 export class Popup {
-    constructor(popupSelector) {
-        this._popupSelector = document.querySelector(popupSelector);
+    constructor(popupSelector, buttonCloseClass, popupOpenedClass) {
+        this._popupElement = document.querySelector(popupSelector);
+        this._buttonCloseClass=buttonCloseClass;
+        this._popupOpenClass=popupOpenedClass;
     }
 
     openPopup() {
-        this._popupSelector.classList.add("popup_opened");
-        document.addEventListener("keydown", this._closeByEscape);
+        this._popupElement.classList.add(this._popupOpenClass);
+        document.addEventListener("keydown", (evt)=>this._closeByEscape(evt));
     };
 
     //добавляем функцию для закрытия попапа
     closePopup() {
-        this._popupSelector.classList.remove("popup_opened");
-        document.removeEventListener("keydown", this._closeByEscape);
+        this._popupElement.classList.remove(this._popupOpenClass);
+        document.removeEventListener("keydown",(evt)=> this._closeByEscape(evt));
     };
 
     /**закрытие по esc*/
     _closeByEscape(evt) {
         if (evt.key === "Escape") {
-        const activePopup = document.querySelector(".popup_opened");
-        this._closePopup(activePopup);
+        this.closePopup();
         }
     };
 
     /**слушатель на крестик и работа с оверлей */
 
     setEventListeners() {
-        this._popupSelector.addEventListener('mousedown', (evt) => {
-            const allCrosses = document.querySelectorAll('.close-item');
-            const cross = allCrosses.forEach((cross) => {
-              cross.addEventListener('click', closePopup)
-            });
-            const activePopup = document.querySelector(".popup_opened");
-            if (evt.target.classList.contains(cross)) {
+        this._popupElement.addEventListener('mousedown', (evt) => {
+            if (evt.target.classList.contains(this._buttonCloseClass)) {
                 this.closePopup();
-            }
-            if (evt.target.classList.contains("popup") ||
-            evt.target.classList.contains("close-item")) {
-                this.closePopup(activePopup);
             };
-        })
+            if (evt.target.classList.contains(this._popupOpenClass)) {
+                this.closePopup();
+            };
+           
+        });
       }
 }

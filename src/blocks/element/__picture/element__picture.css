@@ -1,6 +1,6 @@
 .element__picture {
   width: 100%;
-  object-fit:cover;
+  object-fit: cover;
   aspect-ratio: 1;
   max-width: 100%;
   aspect-ratio: 1/1;
@@ -11,22 +11,17 @@
   max-width: 100%;
   aspect-ratio: 1/1;
   width: 100%;
-  object-fit:cover;
+  object-fit: cover;
   aspect-ratio: 1;
   margin: 0;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  /* background-size: contain;
-  background-repeat: no-repeat; */
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  object-fit: cover ;
+  object-fit: cover;
   border-radius: 10px 10px 0 0;
   background-size: contain;
   background-repeat: no-repeat;
-  /* background-size: contain;
-  background-repeat: no-repeat; */
-
 }
 .element__picture:hover {
   opacity: 0.6;

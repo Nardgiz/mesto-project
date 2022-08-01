@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Путешествия по России</title>
+    <title>Место</title>
+    <link rel="stylesheet" tyoe = "text/css" href="./pages/index.css" />
   </head>
 
   <body>
@@ -23,14 +24,14 @@
             </button>
             <div class="profile__positioned">
               <div class="profile__text">
-                <h1 class="profile__firstname">Жак-Ив Кусто</h1>
+                <h1 class="profile__firstname"></h1>
                 <button
                   class="profile__button-rectangle"
                   type="button"
                   aria-label="Редактировать профиль"
                 ></button>
               </div>
-              <p class="profile__job">Исследователь океана</p>
+              <p class="profile__job"></p>
             </div>
           </div>
           <button
@@ -72,14 +73,14 @@
             aria-label="Закрыть форму редактирования профиля"
           ></button>
           <h3 class="popup__title">Редактировать профиль</h3>
-          <form class="form" name="form-main" novalidate>
+          <form class="form" id="profile-edit" name="form-main" novalidate>
             <label for="text" class="form__label">
               <input
                 class="form__input"
                 type="text"
                 id="first-name"
                 name="firstname"
-                placeholder="Жак-Ив Кусто"
+                placeholder="Введите имя"
                 minlength="2"
                 maxlength="40"
                 required
@@ -93,7 +94,7 @@
                 type="text"
                 id="job"
                 name="job"
-                placeholder="Исследователь океана"
+                placeholder="Введите должность"
                 minlength="2"
                 maxlength="200"
                 required

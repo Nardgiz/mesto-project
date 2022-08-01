@@ -55,6 +55,9 @@ const jobInput = formEditProfile.querySelector("#job");
 const profileName = document.querySelector(".profile__firstname");
 const profileJob = document.querySelector(".profile__job");
 
+const buttonCloseClass = 'close-item';
+const popupOpenedClass = "popup_opened";
+
 const validationConfig = {
   formSelector: ".form",
   inputSelector: ".form__input",
@@ -64,16 +67,31 @@ const validationConfig = {
   errorClass: "error",
 };
 
-const setUserInfo = ({userName, userDescription, userAvatar}) => {
-  if (userName) profileName.textContent = userName;
-  if (userDescription) profileJob.textContent = userDescription;
-  if (userAvatar) avatarImage.src = userAvatar;
-};
+const configPopupImage = {
+image:'.popup__picture',
+text: '.popup__text'
+}
+
+const popupFormInputsSelectors ={
+  form:'.form',
+  input:'.form__input'
+}
+
+const configUserInfo = {
+  firstnameSelector: '.profile__firstname',
+  jobAboutSelector: '.profile__job',
+  avatarSelector:'.profile__avatar'
+  }
+
 
 export {
+  popupOpenedClass,
+  buttonCloseClass,
+  popupFormInputsSelectors,
+  configUserInfo,
+  configPopupImage,
   dataCard,
   avatarInput,
-  setUserInfo,
   popupAvatar,
   avatarOpenButton,
   avatarForm,
