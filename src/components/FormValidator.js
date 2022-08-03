@@ -64,14 +64,14 @@ export class FormValidator{
     });
   };
 
- checkInputs() {
+ resetValidation() {
     this._toggleButtonState();
     this._inputList.forEach(inputElement => {
       this._hideError(inputElement);
     })
-  }
+  };
 
   enableValidation() {
       this._setEventListers()
-  }
+  };
 } 

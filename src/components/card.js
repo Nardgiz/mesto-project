@@ -16,7 +16,7 @@ export default class Card {
   };
 
   /** функция, которая определяет, поставлен лайк или нет */
-  _isLiked(){
+  _checkLIkeStatus(){
     return Boolean(
       this._userCardInfo.likes.find((likeObj) => {
         return likeObj._id === this._userId;
@@ -30,7 +30,7 @@ export default class Card {
       this._userCardInfo=userCardInfo;
     }
     this._likeCounterElement.textContent = this._userCardInfo.likes.length;
-    if(this._isLiked()) {
+    if(this._checkLIkeStatus()) {
       this._likeButtonElement.classList.add(this._likeButtonActiveClass);
     } else {
       this._likeButtonElement.classList.remove(this._likeButtonActiveClass);
