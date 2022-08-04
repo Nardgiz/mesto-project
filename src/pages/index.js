@@ -135,7 +135,7 @@ function submitAvatarForm(evt, {url}) {
   formAvatarAdd.loadSubmitButton(true);
   api.editProfileAvatar(newAvatar)
     .then((dataAvatar) => {
-      userInfo.setUserAvatar(dataAvatar.avatar)
+      userInfo.setUserInfo(dataAvatar)
       formAvatarAdd.closePopup();
     })
     .catch((err) => {

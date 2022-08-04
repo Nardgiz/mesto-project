@@ -10,7 +10,8 @@ export class UserInfo {
         return {
             name: this._nameElement.textContent,
             about: this._aboutElement.textContent,
-            id:this._userId
+            id:this._userId,
+            avatar: this._avatarElement.src
         }
 
     }
@@ -22,7 +23,4 @@ export class UserInfo {
         this._userId = _id;
     }
 
-    setUserAvatar(url){
-        this._avatarElement.src=url;
-    }
 }
