@@ -5,11 +5,9 @@ export class PopupWithForm extends Popup {
         super(popupSelector, buttonCloseClass, popupOpenedClass);
         this._formSubmitHandler = submitEditProfileForm;
         this._formInputsElements=this._popupElement.querySelectorAll(`.${popupFormsSelectors.input}`);
-/*         this._formsElement=this._popupElement.querySelector('.form');
+        this._formElement=this._popupElement.querySelector('.form');
         this._submitBtn = this._popupElement.querySelector('.form__button');
-        this._submitBtnText = this._submitBtn.textContent; */
-        this._formElement=this._popupElement.querySelector(`.${popupFormsSelectors.form}`);
-        this._submitButton=this._popupElement.querySelector(`.${popupFormsSelectors.submitButton}`);
+        this._submitBtnText = this._submitBtn.textContent;
     }
 
 
@@ -36,23 +34,23 @@ export class PopupWithForm extends Popup {
 
     closePopup() {
         super.closePopup();
-        setTimeout(()=>this._formsElement.reset(),600)
+        setTimeout(()=>this._formElement.reset(),600)
     }
 
-/*     loadSubmitButton(isLoading, loadingText = 'Сохранение...') {
-          if (isLoading) {
-            this._submitBtn.textContent = loadingText;
-          } else {
-            this._submitBtn.textContent = this._submitBtnText;
-          }
-        }; */
+    loadSubmitButton(isLoading, loadingText = 'Сохранение...') {
+      if (isLoading) {
+        this._submitBtn.textContent = loadingText;
+      } else {
+        this._submitBtn.textContent = this._submitBtnText;
+      }
+    };
     
-    loadSubmitButton = (isLoading) => {
+/*     loadSubmitButton = (isLoading) => {
       if (isLoading) {
         this._submitButton.textContent+='...';
       } else {
           this._submitButton.textContent=this._submitButton.textContent.slice(0,-3);
         }
-    };
+    }; */
 
 }

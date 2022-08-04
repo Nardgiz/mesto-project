@@ -7,7 +7,7 @@ export class PopupWithRequestApprove extends Popup {
         this._inputData={};
         this._clickApproveButton=clickApproveButton;
         this._buttonElement=this._popupElement.querySelector(buttonSelector);
-        /* this._submitBtnText = this._buttonElement.textContent; */
+        this._submitBtnText = this._buttonElement.textContent;
     }
 
     openPopup(inputData) {
@@ -25,12 +25,12 @@ export class PopupWithRequestApprove extends Popup {
         this._inputData={};
     }
 
-/*     loadSubmitButton(isLoading, loadingText = 'Да...') {
+    loadSubmitButton(isLoading, loadingText = 'Да...') {
         if (isLoading) {
             this._buttonElement.textContent = loadingText;
         } else {
             this._buttonElement.textContent = this._submitBtnText;
         }
       };
- */
+
 }
