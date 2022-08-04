@@ -40,15 +40,13 @@ avatarFormValidator.enableValidation()
 
 const userInfo = new UserInfo(configUserInfo);
 
-
-let userId = null;
 let cardList={};
 
 
 /** Обработчик «отправки» формы редактироания профиля*/
-const formPopupEdit = new PopupWithForm(".popup_profile", buttonCloseClass, popupOpenedClass, popupFormInputsSelectors, {submitEditProfileForm: (evt, [name, about]) => submitEditProfileForm(evt, [name, about])});
-const formImageAdd = new PopupWithForm(".popup_img",buttonCloseClass, popupOpenedClass, popupFormInputsSelectors, {submitEditProfileForm: (evt, [name, link]) => submitImgForm(evt, [name, link])});
-const formAvatarAdd = new PopupWithForm(".popup_avatar",buttonCloseClass, popupOpenedClass, popupFormInputsSelectors, {submitEditProfileForm: (evt, [url]) => submitAvatarForm(evt, [url])});
+const formPopupEdit = new PopupWithForm(".popup_profile", buttonCloseClass, popupOpenedClass, popupFormInputsSelectors, {submitEditProfileForm: (evt, {name, about}) => submitEditProfileForm(evt, {name, about})});
+const formImageAdd = new PopupWithForm(".popup_img",buttonCloseClass, popupOpenedClass, popupFormInputsSelectors, {submitEditProfileForm: (evt, {name, link}) => submitImgForm(evt, {name, link})});
+const formAvatarAdd = new PopupWithForm(".popup_avatar",buttonCloseClass, popupOpenedClass, popupFormInputsSelectors, {submitEditProfileForm: (evt, {url}) => submitAvatarForm(evt, {url})});
 const popUpOpenImage= new PopupWithImage('.popup_pic',buttonCloseClass, popupOpenedClass, configPopupImage);
 const deletePopup = new PopupWithRequestApprove('.popup_request-delete-card', buttonCloseClass, popupOpenedClass, '.form__button_request-delete-card',{clickApproveButton: (evt, inputData) => handleDeleteIconClick(evt, inputData)});
 
@@ -69,23 +67,23 @@ popupButton.addEventListener("click", function () {
 
 
 //Обработчик формы редактирования профиля
-function submitEditProfileForm(evt, [name, about]) {
+function submitEditProfileForm(evt, {name, about}) {
   evt.preventDefault();
   const newDataUser = {
     name: name,
     about: about,
   }
-  formPopupEdit.loadSubmitButton(popupProfile)
+  formPopupEdit.loadSubmitButton(true)
   api.editProfileForm(newDataUser)
     .then((data) => {
-      userInfo.setUserInfo(data.name, data.about)
+      userInfo.setUserInfo(data)
       formPopupEdit.closePopup();  
     })
     .catch((err) => {
       console.log(`Ошибка загрузки данных ${err}`)
     })
     .finally(() => {
-      formPopupEdit.loadSubmitButton(popupProfile);
+      formPopupEdit.loadSubmitButton(false);
     })
     ;
 }
@@ -98,24 +96,24 @@ addImg.addEventListener("click", function () {
 
 
 //Обработчик формы отправки карточки
-function submitImgForm(evt, [name, link]) {
+function submitImgForm(evt, {name, link}) {
   evt.preventDefault();
   const newCard = {
     name: name,
     link: link,
   };
-  formImageAdd.loadSubmitButton(popupAddCard);
+  formImageAdd.loadSubmitButton(true);
   api.addCard(newCard)
     .then((data) => {
       cardList.setRenderData([data]);
-      cardList.renderItems(userId);
+      cardList.renderItems(userInfo.getUserInfo().id);
       formImageAdd.closePopup();
     })
     .catch((err) => {
       console.log(`Ошибка загрузки данных ${err.status}`)
     })
     .finally(() => {
-      formImageAdd.loadSubmitButton(popupAddCard);
+      formImageAdd.loadSubmitButton(false);
     })  
     
 }
@@ -129,22 +127,22 @@ avatarOpenButton.addEventListener("click", () => {
 
 
 //Обработчик формы редактирования аватара
-function submitAvatarForm(evt, [url]) {
+function submitAvatarForm(evt, {url}) {
   evt.preventDefault();
   const newAvatar = {
     avatar: url,
   }
-  formAvatarAdd.loadSubmitButton(popupAvatar);
+  formAvatarAdd.loadSubmitButton(true);
   api.editProfileAvatar(newAvatar)
     .then((dataAvatar) => {
-      userInfo.setUserAvatar(dataAvatar.avatar)
+      userInfo.setUserAvatar(dataAvatar)
       formAvatarAdd.closePopup();
     })
     .catch((err) => {
       console.log(`Ошибка загрузки данных ${err.status}`)
     })
     .finally(() => {
-      formAvatarAdd.loadSubmitButton(popupAvatar);
+      formAvatarAdd.loadSubmitButton(false);
     })  
 };
 
@@ -153,15 +151,13 @@ function submitAvatarForm(evt, [url]) {
 
 /**получаем информацию о пользователи и о загруженных карточках */
 api.getAllInfo().then(([cards, user]) => {
-      userInfo.setUserInfo(user.name,user.about);
-      userInfo.setUserAvatar(user.avatar);
-      userId = user._id;
+      userInfo.setUserInfo(user);
       cards.reverse();
       cardList = new Section({data:cards, renderer:(dataitem, userId) => renderCard(dataitem, userId)}, '.elements');
-      cardList.renderItems(userId);
+      cardList.renderItems(userInfo.getUserInfo().id);
   })
   .catch((err) => {
-    console.log(`Ошибка загрузки данных ${err}`)
+    console.log(`Ошибка загрузки данных ${err.status}`)
   })
 
 
@@ -193,7 +189,7 @@ const deleteImg = function (element) {
 
 // функция запроса удаления карточки 
 function handleDeleteIconClick(evt, dataInput){
-  deletePopup.loadSubmitButton(popupApproveDeleteCard);
+  deletePopup.loadSubmitButton(true);
   api.removeCard(dataInput.cardId)
   .then(() => {
     deleteImg(dataInput.cardElement)
@@ -202,7 +198,7 @@ function handleDeleteIconClick(evt, dataInput){
   .catch((err) => {
     console.log(`Ошибка при удалении ${err.status}`);
   })
-  .finally(()=>deletePopup.loadSubmitButton(popupApproveDeleteCard))
+  .finally(()=>deletePopup.loadSubmitButton(false))
 };
 
 

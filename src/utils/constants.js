@@ -83,7 +83,8 @@ text: '.popup__text'
 
 const popupFormInputsSelectors ={
   form:'form',
-  input:'form__input'
+  input:'form__input',
+  submitButton: 'form__button'
 }
 
 const configUserInfo = {
