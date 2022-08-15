@@ -1,194 +1,219 @@
 import "./index.css";
 import {
-  initialCards,
-  cardList,
+  popupApproveDeleteCard,
+  apiRequestConfig,
+  popupOpenedClass,
+  buttonCloseClass,
+  popupFormInputsSelectors,
+  configUserInfo,
+  configPopupImage,
+  dataCard,
   formElementImg,
-  imgInputName,
-  imgInputLink,
-  profileJob,
-  profileName,
-  jobInput,
-  nameInput,
   formEditProfile,
-  picPopupClose,
-  imgPopupClose,
-  imgButtonSubmit,
-  picPopupEl,
   addImg,
   popupButton,
-  popupPicture,
   popupAddCard,
-  popupButtonClose,
   popupProfile,
   validationConfig,
   avatarForm,
-  avatarInput,
-  avatarButtonSubmit,
-  avatarImage,
   popupAvatar,
-  setUserInfo,
-  submitButtonProfile,
   avatarOpenButton,
 } from "../utils/constants.js";
 
-import { addInfofromPopup, openPopup, closePopup, closeByCross } from "../components/modal";
-import { toggleButtonState } from "../components/validation.js";
-import { setEventListers } from "../components/validation";
-import {
-  createAvatar,
-  createCard,
-  handleChangeLikeStatus,
-  handleDeleteCard,
-} from "../components/card.js";
-import {
-  getAllInfo,
-  addCard,
-  changeLikeStatus,
-  editProfileAvatar,
-  getProfileInfo,
-  editProfileForm,
-  removeCard
-} from "../components/api.js";
+import {UserInfo} from '../components/UserInfo.js';
+import Card from '../components/Card.js';
+import Section from '../components/Section.js';
+import {Api} from "../components/Api.js";
+import { PopupWithForm } from "../components/PopupWithForm.js";
+import { PopupWithImage } from "../components/PopupWithImage.js";
+import { FormValidator } from "../components/FormValidator.js";
+import { PopupWithRequestApprove } from "../components/PopupWithRequestApprove.js";
 
-import { loadSubmitButton } from "../utils/utils.js"
+export const api = new Api(apiRequestConfig);
 
-let userId = null;
+const profileFormValidator = new FormValidator(validationConfig, formEditProfile);
+profileFormValidator.enableValidation()
+const cardFormValidator = new FormValidator(validationConfig, formElementImg);
+cardFormValidator.enableValidation()
+const avatarFormValidator = new FormValidator(validationConfig, avatarForm);
+avatarFormValidator.enableValidation()
 
-/** функция, которая создает новую карточку */
-function renderCard(data, container, userId) {
-  const card = createCard(
-    data,
-    userId,
-    handleChangeLikeStatus,
-    handleDeleteCard
-  );
-  container.prepend(card);
-};
+const userInfo = new UserInfo(configUserInfo);
 
-/**получаем информацию о пользователи и о загруженных карточках */
-getAllInfo().then(([cards, user]) => {
-  setUserInfo({
-    userName: user.name,
-    userDescription: user.about,
-    userAvatar: user.avatar
-  })
-  userId = user._id;
-  /**получаем от сервера карточки и вызываем на них метод рендера каждой */
-  cards.reverse().forEach((card) => {
-    renderCard(card, cardList, userId);
-  });
-});
-/** открытие попапа аватара */
-avatarOpenButton.addEventListener("click", () => {
-  openPopup(popupAvatar);
-});
+let cardList={};
 
-/** открытие попапа редактирования */
-popupButton.addEventListener("click", function () {
-  openPopup(popupProfile);
-  addInfofromPopup(popupProfile);
-});
-/** закрытие попап редактирования профиля */
-popupButtonClose.addEventListener("click", function () {
-  closePopup(popupProfile);
-});
-
-/** открытие попапа для загрузки новых карточек */
-addImg.addEventListener("click", function () {
-  openPopup(popupAddCard);
-});
-/** закрытие попап загрузки новых карточек */
-imgPopupClose.addEventListener("click", function () {
-  closePopup(popupAddCard);
-});
-
-/** добавляем открытие попап просмотра карточек */
-formEditProfile.addEventListener("submit", submitEditProfileForm);
-picPopupEl.addEventListener("click", function () {
-  openPopup(picPopupEl);
-});
 
 /** Обработчик «отправки» формы редактироания профиля*/
-export function submitEditProfileForm(evt) {
+const formPopupEdit = new PopupWithForm(".popup_profile", buttonCloseClass, popupOpenedClass, popupFormInputsSelectors, {submitEditProfileForm: (evt, {name, about}) => submitEditProfileForm(evt, {name, about})});
+const formImageAdd = new PopupWithForm(".popup_img",buttonCloseClass, popupOpenedClass, popupFormInputsSelectors, {submitEditProfileForm: (evt, {name, link}) => submitImgForm(evt, {name, link})});
+const formAvatarAdd = new PopupWithForm(".popup_avatar",buttonCloseClass, popupOpenedClass, popupFormInputsSelectors, {submitEditProfileForm: (evt, {url}) => submitAvatarForm(evt, {url})});
+const popUpOpenImage= new PopupWithImage('.popup_pic',buttonCloseClass, popupOpenedClass, configPopupImage);
+const deletePopup = new PopupWithRequestApprove('.popup_request-delete-card', buttonCloseClass, popupOpenedClass, '.form__button_request-delete-card',{clickApproveButton: (evt, inputData) => handleDeleteIconClick(evt, inputData)});
+
+
+formPopupEdit.setEventListeners();
+formImageAdd.setEventListeners();
+formAvatarAdd.setEventListeners();
+popUpOpenImage.setEventListeners();
+deletePopup.setEventListeners();
+
+
+// открытие попапа редактирования 
+popupButton.addEventListener("click", function () {
+  formPopupEdit.setDefaultValues(userInfo.getUserInfo());
+  profileFormValidator.resetValidation();
+  formPopupEdit.openPopup();
+});
+
+
+//Обработчик формы редактирования профиля
+function submitEditProfileForm(evt, {name, about}) {
   evt.preventDefault();
   const newDataUser = {
-    name: nameInput.value,
-    about: jobInput.value,
+    name: name,
+    about: about,
   }
-  loadSubmitButton(popupProfile, true);
-  editProfileForm(newDataUser)
+  formPopupEdit.loadSubmitButton(true)
+  api.editProfileForm(newDataUser)
     .then((data) => {
-      setUserInfo({
-        userName: data.name,
-        userDescription: data.about,
-      })
-      closePopup(popupProfile);  
+      userInfo.setUserInfo(data)
+      formPopupEdit.closePopup();  
     })
     .catch((err) => {
       console.log(`Ошибка загрузки данных ${err}`)
     })
     .finally(() => {
-      loadSubmitButton(popupProfile, false);
+      formPopupEdit.loadSubmitButton(false);
     })
-    toggleButtonState(submitButtonProfile, false, validationConfig);
+    ;
 }
-submitButtonProfile.addEventListener("submit", submitEditProfileForm);
 
-/** Обработчик «отправки» формы добавления карточек */
-export function formSubmitHandlerImg(evt) {
+// открытие попапа для загрузки новых карточек 
+addImg.addEventListener("click", function () {
+  cardFormValidator.resetValidation();
+  formImageAdd.openPopup();
+});
+
+
+//Обработчик формы отправки карточки
+function submitImgForm(evt, {name, link}) {
   evt.preventDefault();
   const newCard = {
-    name: imgInputName.value,
-    link: imgInputLink.value,
+    name: name,
+    link: link,
   };
-  loadSubmitButton(popupAddCard, true);
-  addCard(newCard)
+  formImageAdd.loadSubmitButton(true);
+  api.addCard(newCard)
     .then((data) => {
-      renderCard(data, cardList, userId);
-      closePopup(popupAddCard);
-      formElementImg.reset();
+      cardList.setRenderData([data]);
+      cardList.renderItems(userInfo.getUserInfo().id);
+      formImageAdd.closePopup();
     })
     .catch((err) => {
       console.log(`Ошибка загрузки данных ${err.status}`)
     })
     .finally(() => {
-      loadSubmitButton(popupAddCard, false);
+      formImageAdd.loadSubmitButton(false);
     })  
-  toggleButtonState(imgButtonSubmit, false, validationConfig);
+    
 }
-formElementImg.addEventListener("submit", formSubmitHandlerImg);
 
-/** Обработчик «отправки» формы для аватара */
-export function formSubmitHandlerAvatar(evt) {
+
+// открытие попапа аватара 
+avatarOpenButton.addEventListener("click", () => {
+  avatarFormValidator.resetValidation();
+  formAvatarAdd.openPopup();
+});
+
+
+//Обработчик формы редактирования аватара
+function submitAvatarForm(evt, {url}) {
   evt.preventDefault();
   const newAvatar = {
-    avatar: avatarInput.value,
+    avatar: url,
   }
-  loadSubmitButton(popupAvatar, true);
-  editProfileAvatar(newAvatar)
+  formAvatarAdd.loadSubmitButton(true);
+  api.editProfileAvatar(newAvatar)
     .then((dataAvatar) => {
-      setUserInfo({
-        userAvatar: dataAvatar.avatar
-      })
-      closePopup(popupAvatar);
-      avatarForm.reset();
+      userInfo.setUserInfo(dataAvatar)
+      formAvatarAdd.closePopup();
     })
     .catch((err) => {
       console.log(`Ошибка загрузки данных ${err.status}`)
     })
     .finally(() => {
-      loadSubmitButton(popupAvatar, false);
+      formAvatarAdd.loadSubmitButton(false);
     })  
-
-  toggleButtonState(avatarButtonSubmit, false, validationConfig);
 };
-avatarButtonSubmit.addEventListener("click", formSubmitHandlerAvatar);
 
-/**проверка инпутов форм на валидность */
-const enableValidation = (config) => {
-  const forms = document.querySelectorAll(config.formSelector);
-  Array.from(forms).forEach((formElement) => {
-    setEventListers(formElement, config);
+
+
+
+/**получаем информацию о пользователи и о загруженных карточках */
+api.getAllInfo().then(([cards, user]) => {
+      userInfo.setUserInfo(user);
+      cards.reverse();
+      cardList = new Section({data:cards, renderer:(dataitem, userId) => renderCard(dataitem, userId)}, '.elements');
+      cardList.renderItems(userInfo.getUserInfo().id);
   })
+  .catch((err) => {
+    console.log(`Ошибка загрузки данных ${err.status}`)
+  })
+
+
+// функция, которая создает новую карточку на освное класса Card
+function renderCard(dataitem, userId) {
+  const card = new Card (
+    dataCard,
+    dataitem,
+    userId,{
+    handleCardClick: (data)=> handleCardClick(data),
+    handleLikeClick: (cardId, isLiked)=> handleLikeClick(cardId, isLiked, card),
+    handleDeleteIconClick: (cardElement, cardId)=>submitDeletePopupHandler(cardElement, cardId)
+});
+cardList.setItem(card.createCard());
+};
+
+//Обработчик попапа удаления карточки
+function submitDeletePopupHandler(cardElement, cardId) {
+  deletePopup.openPopup({cardElement:cardElement, cardId:cardId});
 }
-enableValidation(validationConfig);
+
+
+
+// функция удаления карточек 
+const deleteImg = function (element) { 
+  element.remove();
+};
+
+
+// функция запроса удаления карточки 
+function handleDeleteIconClick(evt, dataInput){
+  deletePopup.loadSubmitButton(true);
+  api.removeCard(dataInput.cardId)
+  .then(() => {
+    deleteImg(dataInput.cardElement)
+    deletePopup.closePopup();
+  })
+  .catch((err) => {
+    console.log(`Ошибка при удалении ${err.status}`);
+  })
+  .finally(()=>deletePopup.loadSubmitButton(false))
+};
+
+
+// функция отвечает за постановку лайка 
+const handleLikeClick = (cardId, isLiked, card) => {
+  api.changeLikeStatus(cardId, isLiked)
+    .then((dataFromServer) => {
+      card.updateLikesState(dataFromServer);
+    })
+    .catch((err) => {
+      console.log(`Ошибка работы лайк ${err.status}`)
+    })
+}
+
+// открытие попапа для просмотра фотографий по клику на карточку 
+const handleCardClick =(data)=>{
+  popUpOpenImage.openPopup(data);
+};

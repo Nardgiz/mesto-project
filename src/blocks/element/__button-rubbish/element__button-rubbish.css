@@ -1,25 +1,24 @@
 .element__button-rubbish {
-    background-image: url(../../../images/Trash.svg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    padding: 0;
-    border: none;
-    border-radius: 0;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-color: transparent;
-    width: 18px;
-    height: 19px;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    
-  }
-  .element__button-rubbish:hover {
-    opacity: 0.6;
-    -webkit-transition: linear 0.2s;
-    -o-transition: linear 0.2s;
-    transition: linear 0.2s;
-    cursor: pointer;
-  }
+  background-image: url(../../../images/Trash.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  width: 18px;
+  height: 19px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.element__button-rubbish:hover {
+  opacity: 0.6;
+  -webkit-transition: linear 0.2s;
+  -o-transition: linear 0.2s;
+  transition: linear 0.2s;
+  cursor: pointer;
+}

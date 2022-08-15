@@ -1,15 +1,22 @@
+//Конфиг для создания карточки
+const dataCard = {
+  templateSelector: '#element-template',
+  cardSelector: '.element',
+  cardPictureSelector: '.element__picture',
+  cardTextSelector: '.element__text',
+  likeButtonSelector: '.element__button',
+  likeButtonActiveClass: 'element__button_active',
+  likeCounterSelector: '.element__like-amount',
+  rubbishButtonSelector: '.element__button-rubbish',
+};
 
-/** находим в html секцию с разметкой для карточек */
-const cardList = document.querySelector(".elements");
-const cardTemplate = document
-  .querySelector("#element-template")
-  .content.querySelector(".element");
+
 /** Находим форму для добавления картинок в DOM */
 const formElementImg = document.querySelector(".form_img");
 const imgInputName = formElementImg.querySelector("#img-name");
 const imgInputLink = formElementImg.querySelector("#img-link");
 const imgButtonSubmit = formElementImg.querySelector(".form__button_img");
-
+const popupApproveDeleteCard=document.querySelector('.popup_request-delete-card');
 const avatarImage = document.querySelector(".profile__avatar");
 const avatarOpenButton = document.querySelector(".profile__avatar-button");
 const avatarButtonSubmit = document.querySelector(".form__button_avatar");
@@ -17,10 +24,10 @@ const avatarForm = document.querySelector(".form_avatar");
 const popupAvatar = document.querySelector(".popup_avatar");
 const avatarInput = document.querySelector(".form__input_avatar");
 
-
+ 
 /** ПОПАПЫ */
 /** Находим попап редактирования профиля в DOM */
-const popupProfile = document.querySelector(".popup");
+const popupProfile = document.querySelector(".popup_profile");
 /** Находим кнопку, которая должна закрывать попап, отвечающий за редактирования профиля */
 const popupButtonClose = document.querySelector(".close-item");
 /** Находим попап для добавления изображений */
@@ -48,6 +55,10 @@ const jobInput = formEditProfile.querySelector("#job");
 const profileName = document.querySelector(".profile__firstname");
 const profileJob = document.querySelector(".profile__job");
 
+const buttonCloseClass = 'close-item';
+const popupOpenedClass = "popup_opened";
+
+
 const validationConfig = {
   formSelector: ".form",
   inputSelector: ".form__input",
@@ -57,15 +68,42 @@ const validationConfig = {
   errorClass: "error",
 };
 
-const setUserInfo = ({userName, userDescription, userAvatar}) => {
-  if (userName) profileName.textContent = userName;
-  if (userDescription) profileJob.textContent = userDescription;
-  if (userAvatar) avatarImage.src = userAvatar;
+const apiRequestConfig = {
+  url: "https://mesto.nomoreparties.co/v1/plus-cohort-13",
+  headers: {
+    authorization: "d1d14902-c78a-4d00-aa9d-9b64f78ed110",
+    "Content-type": "application/json"
+  },
 };
 
+const configPopupImage = {
+image:'.popup__picture',
+text: '.popup__text'
+}
+
+const popupFormInputsSelectors ={
+  form:'form',
+  input:'form__input',
+  submitButton: 'form__button'
+}
+
+const configUserInfo = {
+  firstnameSelector: '.profile__firstname',
+  jobAboutSelector: '.profile__job',
+  avatarSelector:'.profile__avatar'
+  }
+
+
 export {
+  popupApproveDeleteCard,
+  apiRequestConfig,
+  popupOpenedClass,
+  buttonCloseClass,
+  popupFormInputsSelectors,
+  configUserInfo,
+  configPopupImage,
+  dataCard,
   avatarInput,
-  setUserInfo,
   popupAvatar,
   avatarOpenButton,
   avatarForm,
@@ -73,8 +111,6 @@ export {
   avatarImage,
   submitButtonProfile,
   validationConfig,
-  cardList,
-  cardTemplate,
   formElementImg,
   imgInputName,
   imgInputLink,
